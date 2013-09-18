@@ -1,0 +1,464 @@
+%
+% 6.006 problem set 1 solution template
+% You can ignore the first 50 lines here.  Search for TODO.
+%
+\documentclass[12pt,twoside]{article}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{multicol}
+\lstset{language=Python}
+
+\newcommand{\points}[1]{[#1 points]\ }
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\twodots}{\mathinner{\ldotp\ldotp}}
+\newcounter{problemnum}
+\newcommand{\theproblem}{Problem \theproblemsetnum-\arabic{problemnum}}
+\newenvironment{problems}{
+        \begin{list}{{\bf \theproblem. \hspace*{0.5em}}}
+        {\setlength{\leftmargin}{0em}
+         \setlength{\rightmargin}{0em}
+         \setlength{\labelwidth}{0em}
+         \setlength{\labelsep}{0em}
+         \usecounter{problemnum}}}{\end{list}}
+\makeatletter
+\newcommand{\problem}[1][{}]{\item \let\@currentlabel=\theproblem \textbf{#1}}
+\makeatother
+
+\newcounter{problempartnum}[problemnum]
+\newenvironment{problemparts}{
+        \begin{list}{{\bf (\alph{problempartnum})}}
+        {\setlength{\leftmargin}{2.5em}
+         \setlength{\rightmargin}{2.5em}
+         \setlength{\labelsep}{0.5em}}}{\end{list}}
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
+
+\newcommand{\theproblemsetnum}{1}
+\newcommand{\releasedate}{September 10, 2013}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tab}{\hspace*{\tabUnit}}
+
+\newcommand{\yourname}{Kevin Peng}
+\newcommand{\yourcollaborators}{Genghis Chau, Anubhav Jain, Xubo Sun}
+
+\newcommand{\factaa}{708.398478031 }
+\newcommand{\factab}{159.622743845 }
+\newcommand{\factba}{683.857939959 }
+\newcommand{\factbb}{154.835020065 }
+\newcommand{\factca}{512.044433832 }
+\newcommand{\factcb}{163.830906153 }
+
+\begin{document}
+
+\begin{center}
+\begin{Large} {\bf Problem Set \theproblemsetnum} \end{Large} \vspace{12 pt} \\
+\begin{large} \yourname \end{large} \\
+\begin{large} Collaborators:  \yourcollaborators \end{large} \\
+\end{center}
+
+\hrulefill
+\medskip
+
+This problem set is due {\bf Tuesday, September 17} at {\bf 11:59PM}. \\
+
+Solutions should be turned in through the course website.
+{\bf Please download the solution templates (there is one \LaTeX\ template and two Python templates) which are available on the course website.}  Modify both, and submit them at \color{blue} \href{https://alg.csail.mit.edu}{our submission site}. \color{black}   \footnote{Register an account, if you haven't done so.  Then go to Homework, Problem Set 1, and upload your files.  } \\
+
+Programming questions will be graded on a collection of test cases
+(including example test cases to help you debug). Unless you see an
+error message, {\em you will be able to see your grade immediately}.  Your
+grade will be based on the number of test cases for which your
+algorithm outputs a correct answer within certain time and space
+bounds.  You may submit as many times as you'd like, and only the
+final submission counts!  {\bf Therefore, make sure your final
+  submission is what you want it to be.}\\
+
+For written questions, full credit will be given only to
+correct solutions that are described clearly {\em and concisely}. \\
+
+\medskip
+
+\hrulefill
+
+\newpage
+
+\begin{problems}
+
+\problem \points{15} \textbf{Asymptotic Growth}
+
+This problem should be submitted using {\tt pset1\_1\_solution\_template.py}.
+
+%\subsection*{Part 2}
+
+\problem \points{30} \textbf{Binary Search Variant}
+
+In this problem the input includes an array $A$ such that
+$A[0 \twodots n-1]$ contains $n$ integers that are
+sorted into non-decreasing order: $A[i]\le A[i+1]$ for
+$i=0,1,\ldots,n-2$.  The array $A$ \emph{may contain repeated
+elements}, e.g.
+\[
+    A = [ 0, 1, 1, 2, 3, 3, 3, 3, 4, 5, 5, 6, 6, 6, 6]
+\]
+
+\begin{problemparts}
+
+\problempart \points{10}
+
+Describe carefully an algorithm $L(A,s,t,x)$ that, given an array $A$, an
+integer $s$, an integer $t$, and an integer $x$, returns the least
+integer $i$ such that $s \le i \le t$ and $A[i]\ge x$ (or returns $t+1$
+otherwise).
+
+In other words, if at least one element $A[i]$ is equal to $x$ (with $s\le i\le t$), then
+$L$ returns the least (leftmost) such index $i$.  If no element is
+equal to $x$ but there is an element that is greater than $x$, then $L$
+returns the least such index $i$ such that $A[i]>x$.
+
+If all elements in $A$ are less than $x$, your algorithm should return
+$t+1$.  If $s>t$, your algorithm should also return $t+1$.
+
+Your algorithm should be a form of binary search for efficiency.
+
+The initial call on an $n$-element array $A$ would be of the form $L(A,0,n-1,x)$.
+
+Binary search is notoriously difficult to get correct; you may find it
+useful to test your algorithm in Python, but we do not require you to
+do so.  You may describe your algorithm in pseudo-code or in Python, as you
+prefer.  (If you give Python, just include it in your PDF; we will not run
+this code.)
+
+\begin{Verbatim}[frame=single]
+def binary_search(A, s, t, x):
+ 1  if t - s < 0:
+ 2    return t + 1
+ 3  if s == t:
+ 4    if A[s] >= x:
+ 5      return t
+ 6    else:
+ 7      return t + 1
+ 8  mid = (s + t) / 2
+ 9  y = A[mid]
+10  if y >= x:
+11    return binary_search(A, s, mid, x)
+12  if y < x:
+13    return binary_search(A, mid + 1, t, x)
+\end{Verbatim}
+
+\fbox{\vbox{
+This algorithm uses a divide-and-conquer approach to return the least integer $i$ such that $s\leq i\leq t$ and $A[i]\geq x$ (or returns $t+1$ otherwise). First, the algorithm checks if $s > t$ explicitly and returns $t+1$ if it's true. Then, the algorithm checks a base case: when there is only one index to check. If the element at that index is greater than or equal to $x$, we return that index. Otherwise, we return the next index. If we have not yet hit the base case, using a recursive call, the algorithm reduces the number of elements it checks until it hits the base case. It does this by picking the middle element and comparing it to the element $x$. If the middle element is smaller than $x$, it will search the right half of the subarray $A[s \dots t]$, which is $A[mid + 1 \dots t]$. Otherwise, it will search the left half, which is $A[s \dots mid]$.
+}}
+
+\problempart \points{5}
+
+Explain carefully why your algorithm always terminates (doesn't
+loop forever).
+
+\fbox{\vbox{
+The algorithm first checks for the base cases of whether $t -s < 0$ or $t - s = 0$. If it is either of these two cases, then the algorithm immediately terminates. Otherwise, the algorithm recursively calls itself on one of the ranges $[s, \lfloor\frac{s + t}{2}\rfloor]$ or $[\lfloor\frac{s+t}{2}\rfloor + 1, t]$ and we have the fact that $t - s > 0$. We conjecture that in each of these recursive calls, the new range is strictly less than the range $[s, t]$, so $t - s$ is always decreasing, and will eventually satisfy one of the base cases.
+
+\textbf{Case 1}: The algorithm recursively calls itself on the range $[s, \lfloor\frac{s + t}{2}\rfloor]$. \texttt{(Line 11)} \\
+We want to show that $t - s > \lfloor\frac{s + t}{2}\rfloor - s$.
+\begin{center}
+$t > s$\\
+$t - s > 0$\\
+$\frac{t - s}{2} > 0$\\
+$t - s > \frac{t - s}{2}$\\
+$t - s > \frac{s + t}{2} - s$\\
+$t - s > \lfloor\frac{s + t}{2}\rfloor - s$\\
+\end{center}
+%%%% CASE 2
+\textbf{Case 2}: The algorithm recursively calls itself on the range $[ \lfloor\frac{s + t}{2}\rfloor, t]$. \texttt{(Line 13)} \\
+We want to show that $t - s > t - (\lfloor\frac{s + t}{2}\rfloor + 1)$.
+\begin{center}
+$t > s$ \\
+$t - s > 0$\\
+$\frac{ t - s}{2} > 0$\\
+$t - s > \frac{t - s}{2}$\\
+$t - s > t - \frac{s + t}{2}$\\
+$t - s > t - (\lfloor\frac{s + t}{2}\rfloor + 1)$\\
+\end{center}
+
+In both cases, we also note that the old difference and the new difference are integers, so the new difference is an integer amount less than the old difference. This means that one of our base cases will be reached eventually, so the program will terminate.
+}}
+
+
+\problempart \points{5}
+
+Explain why your algorithm doesn't access any elements of $A$ outside
+of $A[s \twodots t]$.
+
+\fbox{\vbox{
+%We maintain that if the algorithm reaches line 8, then $s_{new}$ and $t_{new}$ will not access any elements out of $A[s \dots t]$.
+The algorithm only indexes into the array in \texttt{line 4} and \texttt{line 9}. In the initial call in \texttt{line 4}, we access $A[s]$, which is in the range of $A[s\dots t]$. In each recursive call, we reduce the range to either $[s,\lfloor\frac{s + t}{2}\rfloor]$ or $[\lfloor\frac{s + t}{2}\rfloor + 1, t]$.\\
+
+Invariant: We let $s_0$ denote the initial $s$ and $t_0$ denote the initial $t$. We conjecture that in each recursive call, the new $s$ and $t$ maintain the property that $s_0 \leq s \leq t \leq t_0$.\\
+We know that $t-s \geq 1$ since we have reached \texttt{line 8}.\\
+We split this up into cases:\\
+\textbf{Case 1}: Recursive call in \texttt{line 11}
+\begin{multicols}{2}
+\begin{center}
+$t - s \geq 1$\\
+$s \leq t - 1$\\
+$2s \leq s + t - 1$\\
+$s \leq \frac{s+ t - 1}{2}$\\
+$s \leq \lfloor\frac{s+t}{2}\rfloor$
+\end{center}
+\columnbreak
+\begin{center}
+$s \leq t$\\
+$\frac{s+t}{2} \leq t$\\
+$\lfloor\frac{s+t}{2}\rfloor \leq t$\\
+\end{center}
+\end{multicols}
+
+\textbf{Case 2}: Recursive call in \texttt{line 13}
+\begin{center}
+$s \leq t$\\
+$s \leq \frac{s + t}{2}$\\
+$s \leq \frac{s + t - 1}{2}+ 1$\\
+$s \leq \lfloor\frac{s + t}{2}\rfloor + 1$
+\end{center}
+
+If $t - s$ is odd, then we have
+\begin{center}
+$s + 1 \leq t$\\
+$s + t + 1 \leq 2t$\\
+$\frac{s+t+ 1}{2} \leq t$\\
+$\frac{s + t - 1}{2} + 1 \leq t$\\
+$\lfloor\frac{s + t}{2}\rfloor + 1 \leq t$
+\end{center}
+The last line comes from the fact that $\frac{s + t - 1}{2} = \lfloor\frac{s + t}{2}\rfloor$ when $t - s$ is odd.
+
+If $t - s$ is even, then we have
+\begin{center}
+$s + 2 \leq t$\\
+$s + t + 2 \leq 2t$\\
+$\frac{s + t}{2} + 1 \leq t$\\
+$\lfloor\frac{s + t}{2}\rfloor + 1 \leq t$
+\end{center}
+
+From this, we have shown that $s \leq mid = \lfloor\frac{s + t}{2}\rfloor \leq t$. Thus, the algorithm does not access an element outside of $A[s]$ in \texttt{line 9}. In each of the recursive calls, the new $s$ and $t$ (which are either $\lfloor\frac{s + t}{2}\rfloor$ or $\lfloor\frac{s + t}{2}\rfloor + 1$ are smaller than the old $s$ and $t$, so the invariant, $s_0 \leq s \leq t \leq t_0$, holds. Thus, with an initial call on the array $A[s \dots t]$, no values out of this range are accessed.
+}}
+
+\problempart \points{5}
+
+Explain why your algorithm terminates with the correct answer.
+
+\fbox{\vbox{
+We split this analysis into cases.\\
+\textbf{Case 1}: $t - s < 0$.
+The problem tells us to specially handle this case. We return $t+1$ as the problem states.
+
+\textbf{Case 2}: $t - s \geq 0$ and $x$ is an element in the array.
+
+Let $i$ be the smallest integer such that $s \leq i \leq t$ and $A[i]\geq x$. Thus, $A[i]$ is the element at the index that is the solution to the search algorithm. We note that a solution must exist since $x$ is an element in the array.\\
+We conjecture that the following invariant holds: in every recursive call, the solution $i$ is in the range of indices checked by the recursive call.\\
+In \texttt{line 11}, we check if $A[mid]\geq x$ and if it is, we recursively call this function on $A[s \dots mid]$. In this case, $A[mid]$ could potentially be a solution since it is $\geq x$, so the solution must exist in $A[s \dots mid]$. The indices to the right of $mid$ are ruled out because they are larger than $mid$. Otherwise, we recursively call this function on $A[mid + 1 \dots t]$. $x$ must exist in $A[mid + 1 \dots t]$ since $A$ is given to be sorted (so $x$ is greater than all elements in $A[s \dots mid]$).\\
+From part \texttt{2b} we showed that $t - s$ is always decreasing and from our comparisons in \texttt{2c} we can easily conclude that the $t - s$ is always $\geq 0$ if initially $t - s \geq 0$. From this, we can conclude that eventually our recursive call will break down into the base case of a 1 element array, which must contain the solution by our invariant. We return the index of this element in \texttt{line 4}.
+
+\textbf{Case 3}: $t - s \geq 0$ and $x$ is not an element in the array.
+
+We break this case up into subcases.\\
+\emph{Subcase 1}: There exists an element that is $\geq x$.\\
+Then there exists a solution in $A[s \dots t]$. Knowing this, we can proceed in the exact same manner as case 2. \\
+\emph{Subcase 2}: If there doesn't exist an element that is $\geq x$.\\
+Then only the second recursive call executes repeatedly. Again from part \texttt{2b} and \texttt{2c}, it will terminate when $s == t$ (1-element array), and thus we will return $t + 1$ as a result of \texttt{line 6}. Thus, we would get $t+1$ overall as the answer, which is correct for the case of when all elements in the array are smaller than $x$.
+
+These 3 cases cover all possibilities, so our algorithm terminates with correctness.
+}}
+
+
+\problempart \points{5}
+
+Explain why your algorithm runs in time $O(\log n)$ on an $n$-element input array
+$A[0 \twodots n-1]$.
+
+\fbox{\vbox{
+Let $T(n)$ = $T(t - s)$ denote the time it takes to run this algorithm for a problem that starts at index $s$ and ends at index $t$.
+
+We analyze the runtime of this algorithm by looking at the runtime for each line. Lines 1 - 10 and \texttt{line 12} each take constant time. \texttt{Line 11} takes $T(\lfloor\frac{s+t}{2}\rfloor - s) < T(\frac{s+t}{2} - s) = T(\frac{t - s}{2}) = T(\frac{n}{2})$ time. \texttt{Line 13} takes $T(t - (\lfloor\frac{s + t}{2}\rfloor + 1)) < T(t - \frac{s + t}{2}) = T(\frac{n}{2})$. \texttt{Lines 11 and 13} are mutually exclusive: one will only execute if the other doesn't.
+
+Thus, we have the recurrence relation:
+$$T(n) < T(\frac{n}{2}) + \theta(1)\text{ or }T(n) < T(\frac{n}{2}) + c$$
+Based on the master theorem, we can solve:
+$$T(n) = T(\frac{n}{2}) + c$$
+using case 2 since $c = \Theta(n^{\log_2{1}} = n^0)$
+The master theorem yields $T(n) = \Theta(\log n)$, but since we have a less than sign in our recurrence relation instead of equality in our actual recurrence relation, $T(n) = O(\log n)$ is more appropriate as a solution.
+}}
+
+\end{problemparts}
+
+\newpage
+
+% coding portion
+
+\problem \points{55} \textbf{Factorial Function}
+
+In this problem, we ask you to experiment with three different
+implementations of the factorial function.  The key points are to
+ensure your familiarity with Python, to emphasize the power
+of divide and conquer approaches, to note that the time required
+to multiply big numbers depends on how big those numbers are, and to
+use the fact that with polynomial running times a constant-factor
+change in the input size produces a constant factor change in the
+running time.
+
+The factorial function is well known:
+\[
+    n! = \hbox{factorial}(n) = 1 \cdot 2 \cdots n
+\]
+
+Part (a) is a Python (version 2.7) script to be uploaded.
+Parts (b)--(f) are part of your PDF submission, with the other problems in this pset.
+
+\begin{problemparts}
+
+\problempart \points{15}
+This problem should be submitted using {\tt pset1\_3a\_solution\_template.py}.
+
+\problempart \points{15}
+Measure the running time of each method: for $k = 0, 1, \dots$, compute
+factorial$(2^k)$ using that method, and measure its running time.
+
+If you import the Python module \texttt{time}, then a call to
+\texttt{time.time()} returns the current time.  (There are other
+approaches to measuring time in Python, but this one is simple and
+sufficient on most systems; you may wish to use \texttt{time.clock()}
+or \texttt{timeit} instead---see the Python documentation.)
+
+You may stop when the running time exceeds 10 minutes for that method,
+although we encourage you to attempt to try up to $k=20$ at least, and
+more if you have time.
+
+For each method, give the running time for the largest $n$ for which
+you were able to measure the running time, and also give the running
+time for the second-largest value $n/2$.  (Be sure to say what $n$ and $n/2$ are as well.)
+
+Which of the three method(s) appears to be asymptotically the fastest, based on your experiments?
+
+(We note that you might have obtained different answers if you had run
+Python 3; they have changed the math library between versions.)
+
+\fbox{\vbox{
+\texttt{fact1}: $2^{20}$: \factaa seconds\\
+\texttt{fact1}: $2^{19}$: \factab seconds\\
+\texttt{fact2}: $2^{20}$: \factba seconds\\
+\texttt{fact2}: $2^{19}$: \factbb seconds\\
+\texttt{fact3}: $2^{23}$: \factca seconds\\
+\texttt{fact3}: $2^{22}$: \factcb seconds\\
+\texttt{fact3} appears to be asymptotically the fastest.
+}}
+
+\problempart \points{10}
+Determine a rough ``rate of growth'' of the running time for each method
+as follows, using your experimental data and the following method.
+
+Assume that the running time is approximately of the form
+\begin{equation}
+T(n) = r \cdot n^s
+\label{eqn:assumption}
+\end{equation}
+for some constants $r,s$ (this ignores log factors and low-order
+terms, which is OK for this rough estimation).
+
+For each method, estimate $r$ and $s$ by
+\begin{equation}
+      s \approx \lg \frac{T(n)}{T(n/2)},
+\label{eqn:sapprox}
+\end{equation}
+\begin{equation}
+      r \approx \frac{T(n)}{n^s},
+\label{eqn:rapprox}
+\end{equation}
+where $n$ is the largest input for which that method was timed, and $T(n)$ and $T(n/2)$ are
+the measured running times of that method for those input values.
+Here $\lg n$ denotes the logarithm of $n$ to the base 2.
+Make sure you understand why the assumption of polynomial-time rate of growth in
+equation~(\ref{eqn:assumption}) justifies equations~(\ref{eqn:sapprox}) and (\ref{eqn:rapprox});
+with polynomial growth rates a constant-factor change in the input size yields a
+exponent-$s$-dependent constant-factor change in the running time.
+
+Turn in your estimates for $r$ and $s$ for each method, approximated using the above equations.
+
+\fbox{\vbox{
+$$s_1 \approx \lg \frac{\factaa}{\factab} \approx 2.149$$
+$$r_1 \approx \frac{\factaa}{(2^{20})^{2.149}} \approx 8.16598 \times 10^{-11}$$
+
+$$s_2 \approx \lg \frac{\factba}{\factbb} \approx 2.143$$
+$$r_2 \approx \frac{\factba}{(2^{20})^{2.143}} \approx 8.56683 \times 10^{-11}$$
+
+$$s_3 \approx \lg\frac{\factca}{\factcb} \approx 1.644$$
+$$r_3 \approx \frac{\factca}{(2^{23})^{1.644}} \approx 2.12208 \times 10^{-9}$$
+}}
+
+\problempart \points{5}
+
+Let $M(n)$ denote the time required to multiply two $n$-bit integers together.
+
+Sketch an argument that multiplication has running time that is at most
+quadratic; that is, that $M(n) = O(n^2)$, based on ``high-school multiplication''.
+
+\fbox{\vbox{
+For the multiplication of two $n$-bit integers, there are two steps:\\
+1. The multiplication of the first integer by each digit in the second integer, producing $n$ integers, each of which is at most $2n$-bits in length.\\
+2. The addition of each of these results.
+
+We assume each 1-bit by 1-bit multiplication takes constant time. There are a total of $n^2$ of these multiplications, so this step takes $O(n^2)$ time.\\
+We assume that adding two 1-bit numbers takes constant time. Based on ``high-school multiplication," to compute the overall answer, we add the numbers in each column. There are $n$ numbers in one column at most, so adding the numbers in one column takes $O(n)$ time. Since there are at most $2n$ columns, the addition step also takes $O(n^2)$ time.\\
+Thus, overall multiplication of two $n$-bit integers takes $O(n^2) + O(n^2) = O(n^2)$ time.
+}}
+
+\problempart \points{5}
+
+Give a recurrence for the running time $T(n)$ for computing $n!$ using your
+divide-and-conquer method.
+
+Your recurrence may involve both $T$ and $M$ on the right-hand side, where
+$M(n)$ denotes the time needed to multiply two $n$-bit numbers.
+
+As an approximation, you may assume when computing $n!$ that each of
+the integers $1,2,\ldots,n$ is $\lg n$ bits long, and that the length
+of the product of two integers is equal to the sum of their lengths,
+so that the product of any $k$ integers between $1$ and $n$ may be
+assumed to have length $k\lg n$.
+
+\fbox{\vbox{
+We define a new notation $T_b(n)$ as the time it takes to multiply $n$ integers, each of length $b$ bits, where $b$ is fixed.\
+
+We assume $T(n) = O(T_{\lg n}(n))$.
+We split the multiplication into two groups in our divide-and-conquer method: $1 \dots \lfloor\frac{n}{2}\rfloor$ and ($\lfloor\frac{n}{2}\rfloor + 1) \dots n$. Since each of these are less than $\lg n$ bits in length, we can bound the time to compute the product for both groups with $T_{\lg n}{(\frac{n}{2})}$. The divide cost to split it into two groups is $O(1)$. The combine cost is equal to the cost to multiply the two products together. Using the given approximation, we find that the length of the first product is $\lfloor\frac{n}{2}\rfloor\lg n \leq \frac{n}{2}\lg n$ and the length of the second product is also $\leq\frac{n}{2}\lg n$. Thus, the combine cost is $\leq M(\frac{n}{2} \lg n)$.
+
+Putting this all together, we have the recurrence $T_{\lg n}(n) \leq 2T_{\lg n}(\frac{n}{2}) + M(\frac{n}{2}\lg n)$.
+
+Since $T(n) = O(T_{\log n}(n))$, we can substitute to get $T(n) \leq 2T(\frac{n}{2}) + M(\frac{n}{2}\lg n)$.
+}}
+
+\problempart \points{5}
+
+Do your results for \texttt{fact3} support the hypothesis that the multiplication of large integers
+in Python is performed using some method with \emph{sub-quadratic} running time?  Explain.
+(Hint: consider only the last multiplication your method uses...)
+
+(Perhaps it is only the sub-quadratic algorithm for multiplying large integers that helps make
+divide-and-conquer so effective for computing factorials??)
+
+\fbox{\vbox{
+My results for \texttt{fact3} support the stated hypothesis. Based on part \texttt{3c}, $T(n) \approx 2.12208 \times 10^{-9} \times n^{1.644}$, so the algorithm is \emph{sub-quadratic} running time. This supports the hypothesis that the multiplication of large integers in Python is performed in \emph{sub-quadratic} running time because if it weren't, then the running time of $T(n)$ would be at least quadratic. However, our results from \texttt{3c} reveal that \texttt{fact3}, whose final multiplication is the multiplication of two large integers, is \emph{sub-quadratic}, so we conclude that the multiplication algorithm is also \emph{sub-quadratic}.
+}}
+
+\end{problemparts}
+
+\end{problems}
+
+\end{document}
