@@ -1,0 +1,156 @@
+%
+% 6.006 problem set 1 solution template
+% You can ignore the first 50 lines here.  Search for TODO.
+%
+\documentclass[12pt,twoside]{article}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+%	\usepackage{clrscode}
+
+\def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
+
+%\input{macros}
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{2}
+\newcommand{\releasedate}{September 17, 2013}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tab}{\hspace*{\tabUnit}}
+
+\newcommand{\yourname}{YOUR NAME HERE}  %TODO
+\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+
+\begin{document}
+
+\begin{center}
+\handout{\# 3}{Problem Set \theproblemsetnum}{\releasedate}
+\begin{large} \yourname \end{large} \\
+\begin{large} Collaborators:  \yourcollaborators \end{large} \\
+\end{center}
+
+\hrulefill
+\medskip
+
+This problem set is due {\bf Tuesday, October 1} at {\bf 11:59PM}. \\
+
+This solution template should be turned in through \color{blue} \href{https://alg.csail.mit.edu}{our submission site}. \color{black}   \footnote{Register an account, if you haven't done so.  Then go to Homework, Problem Set 2, and upload your files.  } \\
+
+For written questions, full credit will be given only to
+correct solutions that are described clearly {\em and concisely}. \\
+
+\medskip
+
+\hrulefill
+
+\newpage
+\begin{large} \yourname \end{large} \\
+
+\begin{problems}
+
+\problem \points{20} \textbf{Building bridges}
+
+\begin{problemparts}
+\problempart \points{10}
+Describe an efficient algorithm to link together the $n$ blocks using the greedy strategy outlined above. Make sure to describe the data structures that you use as well as analyze the runtime of your algorithm. For full credit, your algorithm should run in $O(n\,log\,n)$ time.
+
+\fbox{\vbox{ %TODO:
+Write something here! }}
+
+\problempart \points{10}
+Now suppose you know that the longest block has length $1000$. How can you modify the algorithm from part (a) to run in $O(n)$ time? Describe your new algorithm and argue that it has $O(n)$ runtime.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+\end{problemparts}
+\newpage
+%\subsection*{Part 2}
+\begin{large} \yourname \end{large} \\
+
+\problem \points{20} \textbf{Master the Master Theorem and Sorting Too}
+
+The following questions test your ability to use and apply the Master Theorem and sorting algorithms you learned in class to various scenarios.
+
+\begin{problemparts}
+\problempart \points{10} Use the Master Theorem to find the runtime of a recursive algorithm whose execution time is given by the formula:
+
+\MLine{T(n) = 2T(n-1) + log\,n.}
+
+Hint: The Master Theorem cannot be used on the given formula as it stands. Consider what would happen if you substitute one of $n = 2^m$, $n = log\,m$, or $n=m^2$ for $n$. Identify which substitution allows you to apply the Master Theorem, and use it to find the runtime of $T(n)$.
+
+\fbox{\vbox{
+%TODO:
+Write something here! }}
+
+\problempart \points{5}
+The merge sort you learned in class divides the input array into \textbf{two} equal sized arrays and runs the algorithm recursively on those two parts. Now, suppose that a new merge sort, the "tri-merge sort", divides the array into \textbf{three} equal sized arrays and runs "tri-merge sort" recursively on these three equal sized parts. (You can assume that merging the three arrays still takes $O(n)$.) Use the Master Theorem to derive the runtime of "tri-merge sort".
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{5}
+Suppose you are given a list of $N$ integers. All but one of the integers are sorted in numerical order. Identify a sorting algorithm from class which will sort this special case in $O(N)$ time and  explain why this sorting algorithm achieves $O(N)$ runtime in this case.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\end{problemparts}
+
+\newpage
+\begin{large} \yourname \end{large} \\
+
+%\subsection*{Part 3}
+
+\problem \points{20} \textbf{Hacking the MTV VMA}
+As a summer intern for MTV, you've been given the task of managing the seating at the 2014 MTV Video Music Awards. The seats are numbered from $1$ to $N^3$. You've been given a list of $N$ intervals indicating seats that have already been reserved. For example, an interval of $[4, 20]$ indicates that seats $4$ through $20$ have been reserved. However, a bug in MTV's computer system has caused it to return the reserved intervals in random order and to return some intervals that overlap. It is your job to find the first seat in numerical order that has not been reserved. Write an algorithm that accepts the list of intervals and returns the location of the first unreserved seat, or $N^3+1$ if all seats are reserved.
+
+For example, if you are given $N=5$ and the intervals $([1, 5], [2, 9], [18, 25], [10, 15])$, your algorithm should find that seat $16$ is the first seat that has not been reserved.
+
+Describe your algorithm and analyze its runtime. For full credit, your algorithm should have a runtime of $O(N)$.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\newpage
+% coding portion
+\begin{large} \yourname \end{large} \\
+
+\problem \points{45} \textbf{Cracking a firewall}
+\begin{problemparts}
+\problempart \points{30}
+
+Write your solutions in \texttt{pset2\_solution\_template.py}.
+
+\problempart \points{15}
+Suppose that instead of receiving a stream of packets you are batch processing all packets in the follow way: \textit{first} all the control packets arrive, \textit{then} all the regular packets arrive, \textit{then} you process them all. Note that this means all control packets should be applied before any regular packets are checked. For this part, you may also assume that $\textsc{MAX\_PORT}=n^6$.
+
+Describe an efficient algorithm to process all process all packets and generate the three lists of regular packets (forwarded, quarantined, and dropped). Analyze its runtime. You may refer to your customized AVL-tree from part (a) in your solution. For full credit, your algorithm should have $O(k\log{k} + n)$ runtime.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\end{problemparts}
+
+\end{problems}
+
+\end{document}
