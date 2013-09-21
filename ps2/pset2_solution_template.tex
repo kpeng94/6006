@@ -8,13 +8,8 @@
 \usepackage{hyperref}
 \usepackage{color}
 \usepackage{enumerate}
-\usepackage{textcomp}
-\usepackage[T1]{fontenc}
-%	\usepackage{clrscode}
 
-\def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
-
-%\input{macros}
+\newcommand{\points}[1]{[#1 points]\ }
 
 \setlength{\oddsidemargin}{0pt}
 \setlength{\evensidemargin}{0pt}
@@ -22,19 +17,41 @@
 \setlength{\topmargin}{0in}
 \setlength{\textheight}{8.5in}
 
-% Fill these in!
+\def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
+\newcommand{\twodots}{\mathinner{\ldotp\ldotp}}
+\newcounter{problemnum}
+\newcommand{\theproblem}{Problem \theproblemsetnum-\arabic{problemnum}}
+\newenvironment{problems}{
+        \begin{list}{{\bf \theproblem. \hspace*{0.5em}}}
+        {\setlength{\leftmargin}{0em}
+         \setlength{\rightmargin}{0em}
+         \setlength{\labelwidth}{0em}
+         \setlength{\labelsep}{0em}
+         \usecounter{problemnum}}}{\end{list}}
+\makeatletter
+\newcommand{\problem}[1][{}]{\item \let\@currentlabel=\theproblem \textbf{#1}}
+\makeatother
+
+\newcounter{problempartnum}[problemnum]
+\newenvironment{problemparts}{
+        \begin{list}{{\bf (\alph{problempartnum})}}
+        {\setlength{\leftmargin}{2.5em}
+         \setlength{\rightmargin}{2.5em}
+         \setlength{\labelsep}{0.5em}}}{\end{list}}
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
+
 \newcommand{\theproblemsetnum}{2}
-\newcommand{\releasedate}{September 17, 2013}
+\newcommand{\releasedate}{October 1, 2013}
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tab}{\hspace*{\tabUnit}}
 
-\newcommand{\yourname}{YOUR NAME HERE}  %TODO
-\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+\newcommand{\yourname}{Kevin Peng}
+\newcommand{\yourcollaborators}{}
 
 \begin{document}
 
 \begin{center}
-\handout{\# 3}{Problem Set \theproblemsetnum}{\releasedate}
+\begin{Large} {\bf Problem Set \theproblemsetnum} \end{Large} \vspace{12 pt} \\
 \begin{large} \yourname \end{large} \\
 \begin{large} Collaborators:  \yourcollaborators \end{large} \\
 \end{center}
@@ -91,15 +108,20 @@ The following questions test your ability to use and apply the Master Theorem an
 Hint: The Master Theorem cannot be used on the given formula as it stands. Consider what would happen if you substitute one of $n = 2^m$, $n = log\,m$, or $n=m^2$ for $n$. Identify which substitution allows you to apply the Master Theorem, and use it to find the runtime of $T(n)$.
 
 \fbox{\vbox{
-%TODO:
-Write something here! }}
+We substitute $n = \log m$ into this equation to get a form that we can solve using the master theorem.
+$$ T(\log m) = T(\log m - 1) + \log \log m$$
+We define a new recurrence: $S(2^m) = T(m)$. Thus, we get
+$$ S(m) = S(\frac{m}{2}) + \log \log m$$
+We can now solve this recurrence using the Master Theorem!
+Here, $b = 2$ and $a = 1$, so we have $f(m) = \log \log m$ and $m^{\log_{2}{1}} = 1$.
+}}
 
 \problempart \points{5}
 The merge sort you learned in class divides the input array into \textbf{two} equal sized arrays and runs the algorithm recursively on those two parts. Now, suppose that a new merge sort, the "tri-merge sort", divides the array into \textbf{three} equal sized arrays and runs "tri-merge sort" recursively on these three equal sized parts. (You can assume that merging the three arrays still takes $O(n)$.) Use the Master Theorem to derive the runtime of "tri-merge sort".
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+The recursive algorithm for tri-merge sort is $$T(n) \leq 3T(\frac{n}{3}) + cn$$
+Using the Master Theorem, we have that $f(n) = cn = \Theta(n^{\log_3{3}})$. This is the second case of the Master Theorem. Thus, the runtime of this algorithm is $O(n \log n)$.
 }}
 
 \problempart \points{5}
