@@ -81,8 +81,7 @@ correct solutions that are described clearly {\em and concisely}. \\
 \problempart \points{10}
 Describe an efficient algorithm to link together the $n$ blocks using the greedy strategy outlined above. Make sure to describe the data structures that you use as well as analyze the runtime of your algorithm. For full credit, your algorithm should run in $O(n\,log\,n)$ time.
 
-\fbox{\vbox{ %TODO:
-Write something here! }}
+\fbox{\vbox{ Given the list of $n$ steel blocks, we can run first build a min-heap in $O(n)$ time. Then, we can extract the smallest block from the min-heap twice, link the two blocks together, and insert the sum of those two blocks back into the min-heap. Each extraction takes $O(\log n)$ time and inserting an element into the min-heap also takes $O(\log n)$ time. We assume that the combine cost takes constant time. We append the lengths of the blocks we combined as a tuple to an auxiliary array, which takes constant time as well. Each time we perform this operation, we reduce the size of our heap by 1. Since we start with $n$ elements in the heap and terminate when there are none, we perform this operation $n$ times, so the total time for running this greedy algorithm is $O(n \log n)$.}}
 
 \problempart \points{10}
 Now suppose you know that the longest block has length $1000$. How can you modify the algorithm from part (a) to run in $O(n)$ time? Describe your new algorithm and argue that it has $O(n)$ runtime.

@@ -253,12 +253,24 @@ class AVL(BST):
             update_height(parent.left)
         elif not left and parent.right:
             update_height(parent.right)
-            
+
         self.rebalance(parent)
 
     def delete_min(self):
         node, parent = BST.delete_min(self)
         self.rebalance(parent)
+
+# class IntervalAVLnode(BSTnode):
+#     def __init__(self, interval):
+#         self.key = t
+#         self.disconnect()
+#     def disconnect(self):
+#         self.left = None
+#         self.right = None
+#         self.parent = None
+# class IntervalAVL(AVL):
+#     def __init__(self):
+#         BST.__init__(self)
 
 
 # Call this python module directly to test that the BST functions correctly.
@@ -325,6 +337,9 @@ def handle_packet_stream(packets):
 # that you don't lose information about which ranges are
 # valid/invalid/quarantined. Your module will be reloaded for each test case, so
 # you start with a clean state each time.
+
+avlTree = AVL()
+
 def recv_command_packet(start, end, t):
     """
     Receive a command packet, which gives some port range information. |start|
@@ -332,7 +347,7 @@ def recv_command_packet(start, end, t):
     (inclusive), and t is a single character. 'V' means valid, 'Q' means
     quarantined. All ports are initially invalid.
     """
-    pass
+    avlTree.insert(BSTnode([start, end], t))
 
 def recv_regular_packet(port):
     """
