@@ -87,8 +87,7 @@ Describe an efficient algorithm to link together the $n$ blocks using the greedy
 Now suppose you know that the longest block has length $1000$. How can you modify the algorithm from part (a) to run in $O(n)$ time? Describe your new algorithm and argue that it has $O(n)$ runtime.
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+We can first sort the array using a counting sort in $O(n + k)$ time. Given $n$ inputs and the fact that no value is greater than 1000, we can let $k = 1000n$. Since $k = O(n)$, we are able to sort all of the elements in $O(n)$ time. The output is an array of length $1000n$. We then go through the length $1000n$ element array one element at a time and add the smallest values up and increase the counter of the index corresponding to the sum by one. Since we have to do $O(n)$ additions, this algorithm will run in $O(n)$ time.
 }}
 \end{problemparts}
 \newpage
@@ -127,8 +126,7 @@ Using the Master Theorem, we have that $f(n) = cn = \Theta(n^{\log_3{3}})$. This
 Suppose you are given a list of $N$ integers. All but one of the integers are sorted in numerical order. Identify a sorting algorithm from class which will sort this special case in $O(N)$ time and  explain why this sorting algorithm achieves $O(N)$ runtime in this case.
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+We can go through the array and find the element that is misplaced by looking at each element's left and right neighbor. Once we find the element that is out of place, we can sort it by running insertion sort on that single element. The reason that it works is because insertion sort will compare it with at most $n$ elements in the array, but unlike normal insertion sort, we only have to run it on one element. Thus, the running time for this special case is $O(N)$.
 }}
 
 \end{problemparts}
@@ -146,8 +144,7 @@ For example, if you are given $N=5$ and the intervals $([1, 5], [2, 9], [18, 25]
 Describe your algorithm and analyze its runtime. For full credit, your algorithm should have a runtime of $O(N)$.
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+We can first use radix sort with $k = N$. Thus, we can sort the elements in the array in $O(3(N + N))$ time. After that, we can go through each interval and run the following algorithm. For the first interval, if 1 is not included, then we return 1. After that, we keep track of the maximum value included every time. If the minimum of the next interval is $> 1 + $ this maximum value, we return $1 + $ this maximum value. Otherwise, we set the new maximum value equal to the value of this upper bound for this new interval. We keep going on until we reach the end of the intervals.
 }}
 
 \newpage

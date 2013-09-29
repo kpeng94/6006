@@ -22,6 +22,8 @@ class BST(object):
         else:
             node = self.root
             while True:
+                if overlap(node.key, t):
+                    break
                 if t < node.key:
                     # Go left
                     if node.left is None:
@@ -170,6 +172,17 @@ def height(node):
 def update_height(node):
     node.height = max(height(node.left), height(node.right)) + 1
 
+def overlap(key, t):
+    nodeMin = key[0]
+    nodeMax = key[1]
+    tMin = t[0]
+    tMax = t[1]
+    if nodeMax < tMin:
+        return False
+    elif tMax < nodeMin:
+        return False
+    return True
+
 class AVL(BST):
     """
     AVL binary search tree implementation.
@@ -211,10 +224,12 @@ class AVL(BST):
         update_height(x)
         update_height(y)
 
-    def insert(self, t):
+    def insert(self, t, type2):
         """Insert key t into this tree, modifying it in-place."""
         node = BST.insert(self, t)
+        node.type = type2
         self.rebalance(node)
+        # print self
 
     def rebalance(self, node):
         while node is not None:
@@ -260,18 +275,19 @@ class AVL(BST):
         node, parent = BST.delete_min(self)
         self.rebalance(parent)
 
-# class IntervalAVLnode(BSTnode):
-#     def __init__(self, interval):
-#         self.key = t
-#         self.disconnect()
-#     def disconnect(self):
-#         self.left = None
-#         self.right = None
-#         self.parent = None
-# class IntervalAVL(AVL):
-#     def __init__(self):
-#         BST.__init__(self)
-
+    def find(self, t):
+        node = self.root
+        while node is not None:
+            if overlap(node.key, [t, t]):
+                if node.type == 'V':
+                    return 'forward'
+                elif node.type == 'Q':
+                    return 'quarantine'
+            elif [t, t] < node.key:
+                node = node.left
+            else:
+                node = node.right
+        return 'drop'
 
 # Call this python module directly to test that the BST functions correctly.
 def test(args=None, BSTtype=AVL):
@@ -327,6 +343,7 @@ def handle_packet_stream(packets):
         dropped.append(i)
   return [forwarded, quarantine, dropped]
 
+avlTree = AVL()
 
 #
 # FILL IN THE FUNCTIONS BELOW
@@ -337,9 +354,6 @@ def handle_packet_stream(packets):
 # that you don't lose information about which ranges are
 # valid/invalid/quarantined. Your module will be reloaded for each test case, so
 # you start with a clean state each time.
-
-avlTree = AVL()
-
 def recv_command_packet(start, end, t):
     """
     Receive a command packet, which gives some port range information. |start|
@@ -347,7 +361,7 @@ def recv_command_packet(start, end, t):
     (inclusive), and t is a single character. 'V' means valid, 'Q' means
     quarantined. All ports are initially invalid.
     """
-    avlTree.insert(BSTnode([start, end], t))
+    avlTree.insert([start, end], t)
 
 def recv_regular_packet(port):
     """
@@ -355,4 +369,4 @@ def recv_regular_packet(port):
     addressed to. If the port is valid, return 'forward', if the port is
     quarantined return 'quarantine', and if the port is invalid, return 'drop'.
     """
-    pass
+    return avlTree.find(port)
