@@ -1,0 +1,274 @@
+%
+% 6.006 problem set 1 solution template
+% You can ignore the first 50 lines here.  Search for TODO.
+%
+\documentclass[12pt,oneside]{article}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{clrscode}
+
+\def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
+
+\newcommand{\name}{}
+
+\newcommand{\mitst}[1]{\begin{description}
+\item[MIT students:] #1
+\end{description}}
+\newcommand{\smast}[1]{\begin{description}
+\item[SMA students:] #1
+\end{description}}
+
+\newcommand{\profs}{Erik Demaine, Ronald L. Rivest, and Nir Shavit}
+\newcommand{\subj}{6.006}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\newcommand{\htitle}[3]{\noindent\vspace*{-\toppush}\newline\parbox{6.5in}
+{\textit{Introduction to Algorithms: 6.006}\hfill\name\newline
+Massachusetts Institute of Technology \hfill #3\newline
+\profs\hfill Handout #1\vspace*{-.5ex}\newline
+\mbox{}\hrulefill\mbox{}}\vspace*{1ex}\mbox{}\newline
+\begin{center}{\Large\bf #2}\end{center}}
+
+\newcommand{\handout}[3]{\thispagestyle{empty}
+ \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
+ \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
+
+ 
+\newcounter{problemnum}
+\newcommand{\theproblem}{Problem \theproblemsetnum-\arabic{problemnum}}
+\newenvironment{problems}{
+        \begin{list}{{\bf \theproblem. \hspace*{0.5em}}}
+        {\setlength{\leftmargin}{0em}
+         \setlength{\rightmargin}{0em}
+         \setlength{\labelwidth}{0em}
+         \setlength{\labelsep}{0em}
+         \usecounter{problemnum}}}{\end{list}}
+\makeatletter
+\newcommand{\problem}[1][{}]{\item \let\@currentlabel=\theproblem \textbf{#1}}
+\makeatother
+
+\newcounter{problempartnum}[problemnum]
+\newenvironment{problemparts}{
+        \begin{list}{{\bf (\alph{problempartnum})}}
+        {\setlength{\leftmargin}{2.5em}
+         \setlength{\rightmargin}{2.5em}
+         \setlength{\labelsep}{0.5em}}}{\end{list}}
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
+ 
+\newcommand{\points}[1]{[#1 points]\ }
+\newcommand{\parts}[1]
+{
+  \ifnum#1=1
+  (1 part)
+  \else
+  (#1 parts)
+  \fi
+  \ 
+}
+ 
+ 
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{3}
+\newcommand{\releasedate}{October 1, 2013}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tab}{\hspace*{\tabUnit}}
+
+\newcommand{\yourname}{YOUR NAME HERE}  %TODO
+\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+
+\begin{document}
+
+\begin{center}
+\handout{\# 3}{Problem Set \theproblemsetnum}{\releasedate}
+\begin{large} \yourname \end{large} \\
+\begin{large} Collaborators:  \yourcollaborators \end{large} \\
+\end{center}
+
+\hrulefill
+\medskip
+
+This problem set is due {\bf Tuesday, October 22} at {\bf 11:59PM}. \\
+
+This solution template should be turned in through \color{blue} \href{https://alg.csail.mit.edu}{our submission site}. \color{black}   \footnote{Register an account, if you haven't done so.  Then go to Homework, Problem Set 3, and upload your files.  } \\
+
+For written questions, full credit will be given only to
+correct solutions that are described clearly {\em and concisely}. \\
+
+\medskip
+
+\hrulefill
+
+\newpage
+
+\pagestyle{myheadings}
+
+
+\begin{problems}
+
+\newpage
+\problem \points{16} \textbf{Hash Functions and Data Sequences}
+
+This problem should be submitted using {\tt pset3\_1\_solution\_template.py}.
+
+\problem \points{24} \textbf{Open Addressing}
+
+\begin{problemparts}
+\problempart \points{5}  Ben is supposed to return the list of students to the professor, but he accidentally spills coffee on it, rendering it illegible.  To cover his incompetence, Ben wants to hide his mistake by recreating the list of student numbers in order; however, he only remembers two facts about the order in which the student numbers were inserted.
+
+\begin{itemize}
+\item 98 was the first student number to be inserted.
+\item 35 was inserted before 14.
+\end{itemize}
+
+Given the completed hash table, in what order did Ben insert the student numbers?
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{5}  Student 98 leaves Ben's section, so Ben deletes that record from the hash table.  The next day, Ben sees Student 15 yawning during the lecture, so naturally he decides to give Student 15 a 0 in class participation.  However, Ben can't remember if Student 15 is in his section, so he decides to look up Student 15 in his hashtable.  Which cells does Ben need to inspect to determine if the student number 15 is in the table?
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{5} Student 98 rejoins Ben's section, so Ben reverts back to his original hash table found above.  Having just learned about several sorting algorithms, Ben wants to ``sort'' the student numbers of the hash table to end up with the hash table below.
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+0 & 14 \\ \hline
+1 & 17 \\ \hline
+2 &  \\ \hline
+3 &  \\ \hline
+4 & 24 \\ \hline
+5 & 35 \\ \hline
+6 & 54 \\ \hline
+7 & 55 \\ \hline
+8 & 98 \\ \hline
+9 & \\ \hline
+\end{tabular}
+\end{center}
+
+Assuming that duplicate student numbers cannot simulataneously be stored in the hash table, give a length-8 sequence of insertion and deletion operations that would transform the original table into the one shown above.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{9}
+
+Ben hypothesizes that he can start from an arbitrary hash table of size $k$ with student numbers $[a_0,a_1,\dots,a_{k-1}]$ and end up with student numbers $[b_0,b_1,\dots,b_{k-1}]$ via a finite sequence of insertion and deletion operations:
+
+Note that each $a_i$ or $b_i$ is allowed to be empty.
+Ben believes that such a transforming sequence of operations exists
+regardless of the hash function, assuming linear probing and assuming that
+duplicate student numbers cannot simultaneously exist in the hash table.
+
+Is Ben's hypothesis correct?  If so, demonstrate a procedure to accomplish
+this.  If not, give a counterexample.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\end{problemparts}
+
+\newpage
+\problem \points{35} \textbf{Finding ``Nemo''}
+
+\begin{problemparts}
+
+\problempart \points{5} 
+Determine the running time of computing $H(\cdot)$ for a string of length $k$ under the word RAM model for computation. Assuming that you have precomputed $a^{k-1}\mod m$, determine the running time for computing $H(\cdot)$ for every substring of length $k$ in $T$, using the rolling hash method. Your answers should be functions of $n$, $k$, and $d$ (or some subset of these variables).
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{5} For an input string of length $k$, you must compute $f(k)$ variants, for some function $f$. This takes time $\Theta(f(k))$. You must then compute the hashes of each of these variants. With some care, this too can be done in time $\Theta(f(k))$ after computing $H(S)$.
+
+Give an expression for $f$, argue that you can compute hashes of all $f(k)$ variants in time $\Theta(f(k))$ after computing $H(S)$, and give the overall asymptotic running time of this sequence of operations.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{5} After computing hashes of all length-$k$ substrings of $T$ and of all variants of $S$, you must examine substrings of $T$ and variants of $S$ that hash to the same value and test for actual equality. Using the simple uniform hashing assumption and assuming that testing for equality takes time $\Theta(k)$, compute the expected running time in the worst case of this operation and argue that your answer is correct. Your answer should be a function of $n$, $k$, $d$, and $m$ (or some subset of these variables).
+
+Finally, compute the overall running time of approximate string search for a string of length $k$ in a document of length $n$. Asymptotically, what value of $m$ must you choose so that this running time is linear in $n$?
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{20}
+
+This problem should be submitted using {\tt pset3\_1\_solution\_template.py}.
+
+\end{problemparts}
+
+\newpage
+\problem \points{25} \textbf{Multiple Multiplications}
+
+\begin{problemparts}
+\problempart \points{10} Your implementation for {\tt naive\_multiply} should be in \\ 
+{\tt pset3\_4\_solution\_template.py}
+
+\problempart \points{10} Your implementation for {\tt karatsuba\_multiply} should be in \\ 
+{\tt pset3\_4\_solution\_template.py}
+
+\problempart \points{5} You finished writing your Karatsuba algorithm, but the Python Bee's testing system has broken down! In order to show that your new algorithm is superior to your old one (and Ben Bitdiddle's), run {\tt naive\_multiply} and {\tt karatsuba\_multiply} on various input values and measure the runtimes of the two functions. Show that the runtime of {\tt karatsuba\_multiply} grows at an asymptotically slower rate than {\tt naive\_multiply}.
+
+Just like in Problem 1-3b in Problem Set 1, assume that each algorithm has
+a running time of the form
+%
+\begin{equation}
+T(n) = r \cdot n^s
+\end{equation}
+%
+and use the estimators
+%
+\begin{equation}
+s \approx \lg_2 {T(n) \over T(n/2)}, \qquad
+r \approx {T(n) \over n^s},
+\end{equation}
+%
+where $n$ is the largest $n$ for which you measure the running time.
+You should choose $n$ large enough so that the algorithm takes a non trivial amount of time to run on your machine, and so that the running times are significantly
+different. You may want to take the average of a large number of runtimes to get the most accurate results.
+You can use the Python module {\tt time}, or other similar functionality, to help you measure time.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\end{problemparts}
+
+\end{problems}
+
+\end{document}
