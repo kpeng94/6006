@@ -41,7 +41,7 @@ Massachusetts Institute of Technology \hfill #3\newline
  \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
  \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
 
- 
+
 \newcounter{problemnum}
 \newcommand{\theproblem}{Problem \theproblemsetnum-\arabic{problemnum}}
 \newenvironment{problems}{
@@ -61,8 +61,8 @@ Massachusetts Institute of Technology \hfill #3\newline
         {\setlength{\leftmargin}{2.5em}
          \setlength{\rightmargin}{2.5em}
          \setlength{\labelsep}{0.5em}}}{\end{list}}
-\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
- 
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
+
 \newcommand{\points}[1]{[#1 points]\ }
 \newcommand{\parts}[1]
 {
@@ -71,10 +71,10 @@ Massachusetts Institute of Technology \hfill #3\newline
   \else
   (#1 parts)
   \fi
-  \ 
+  \
 }
- 
- 
+
+
 \setlength{\oddsidemargin}{0pt}
 \setlength{\evensidemargin}{0pt}
 \setlength{\textwidth}{6.5in}
@@ -89,8 +89,8 @@ Massachusetts Institute of Technology \hfill #3\newline
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tab}{\hspace*{\tabUnit}}
 
-\newcommand{\yourname}{YOUR NAME HERE}  %TODO
-\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+\newcommand{\yourname}{Kevin Peng}
+\newcommand{\yourcollaborators}{Genghis Chau, Jodie Chen}
 
 \begin{document}
 
@@ -139,15 +139,13 @@ This problem should be submitted using {\tt pset3\_1\_solution\_template.py}.
 Given the completed hash table, in what order did Ben insert the student numbers?
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+We are given that 98 comes first. We know that 14 comes before 54, which comes before 24 because they have the same residue modulo 10, and in the table, 14 comes before 54, which is before 24 in the table. We are given that 35 comes before 14, so it must also come before 54 and 24. Our order so far is 98, 35, 14, 54, 24. We know that 55 comes after 54 since 14 and 35 must have already hashed to slots 4 and 5, and 54 comes before 55 in the table, so it must have been inserted before 55 by linear probing. We know that 17 must come after 55 since 55 occupies slot 7, which means slot 7 was already filled when we tried to hash student 17. Lastly we know that 24 must come after all the other numbers because it was unable to hash to any of the slots from 4 to 9, so all of those slots must have been filled already. Thus, the order is 98, 35, 14, 54, 55, 17, 24.
 }}
 
 \problempart \points{5}  Student 98 leaves Ben's section, so Ben deletes that record from the hash table.  The next day, Ben sees Student 15 yawning during the lecture, so naturally he decides to give Student 15 a 0 in class participation.  However, Ben can't remember if Student 15 is in his section, so he decides to look up Student 15 in his hashtable.  Which cells does Ben need to inspect to determine if the student number 15 is in the table?
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+First, Ben inspects slot 5 since $15 \% 10 = 5$. He finds that slot 5 does not contain student 15. He then proceeds by linear probing to slots 6 and 7, which also do not contain student 15. He proceeds to slot 8 which is empty, so he assumes that student 15 is not in the table.
 }}
 
 \problempart \points{5} Student 98 rejoins Ben's section, so Ben reverts back to his original hash table found above.  Having just learned about several sorting algorithms, Ben wants to ``sort'' the student numbers of the hash table to end up with the hash table below.
@@ -171,8 +169,16 @@ Write something here!
 Assuming that duplicate student numbers cannot simulataneously be stored in the hash table, give a length-8 sequence of insertion and deletion operations that would transform the original table into the one shown above.
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+\begin{enumerate}
+\item Ben can first delete student 17 from the table. Slot 9 is now empty.
+\item Ben can then insert student 15 into the table. 15 is now in slot 9.
+\item Ben can then insert student 17 into the table. 17 is now in slot 1.
+\item Ben can then delete student 24 from the table. Slot 0 is now empty.
+\item Ben can then delete student 14 from the table. Slot 4 is now empty.
+\item Ben can then insert student 24 in the table. 24 is now in slot 4.
+\item Ben can then insert student 14 in the table. 14 is now in slot 0.
+\item Ben can then delete student 15 from the table. Slot 9 is now empty.
+\end{enumerate}
 }}
 
 \problempart \points{9}
@@ -199,7 +205,7 @@ Write something here!
 
 \begin{problemparts}
 
-\problempart \points{5} 
+\problempart \points{5}
 Determine the running time of computing $H(\cdot)$ for a string of length $k$ under the word RAM model for computation. Assuming that you have precomputed $a^{k-1}\mod m$, determine the running time for computing $H(\cdot)$ for every substring of length $k$ in $T$, using the rolling hash method. Your answers should be functions of $n$, $k$, and $d$ (or some subset of these variables).
 
 \fbox{\vbox{
@@ -235,10 +241,10 @@ This problem should be submitted using {\tt pset3\_1\_solution\_template.py}.
 \problem \points{25} \textbf{Multiple Multiplications}
 
 \begin{problemparts}
-\problempart \points{10} Your implementation for {\tt naive\_multiply} should be in \\ 
+\problempart \points{10} Your implementation for {\tt naive\_multiply} should be in \\
 {\tt pset3\_4\_solution\_template.py}
 
-\problempart \points{10} Your implementation for {\tt karatsuba\_multiply} should be in \\ 
+\problempart \points{10} Your implementation for {\tt karatsuba\_multiply} should be in \\
 {\tt pset3\_4\_solution\_template.py}
 
 \problempart \points{5} You finished writing your Karatsuba algorithm, but the Python Bee's testing system has broken down! In order to show that your new algorithm is superior to your old one (and Ben Bitdiddle's), run {\tt naive\_multiply} and {\tt karatsuba\_multiply} on various input values and measure the runtimes of the two functions. Show that the runtime of {\tt karatsuba\_multiply} grows at an asymptotically slower rate than {\tt naive\_multiply}.

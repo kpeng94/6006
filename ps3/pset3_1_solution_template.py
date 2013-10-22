@@ -21,26 +21,26 @@ answer_problem_1exampleA = 1.0/10.0
 answer_problem_1exampleB = 1.0/5.0
 
 ### Problem 1-1(a) ###
-answer_problem_1a = None
+answer_problem_1a = 1.0/20.0
 
 ### Problem 1-1(b) ###
-answer_problem_1b = None
+answer_problem_1b = 1.0/95.0
 
 ### Problem 1-1(c) ###
-answer_problem_1c = None
+answer_problem_1c = 2.0/105.0
 
 ### Problem 1-1(d) ###
-answer_problem_1d = None
+answer_problem_1d = 1.0/25.0
 
 ### Problem 1-1(e) ###
-answer_problem_1e = None
+answer_problem_1e = 1.0/45.0
 
 ### Problem 1-1(f) ###
-answer_problem_1f = None
+answer_problem_1f = 1.0/5.0
 
 ### Problem 1-1(g) ###
-answer_problem_1g = None
+answer_problem_1g = 1.0/5.0
 
 ### Problem 1-1(h) ###
-answer_problem_1h = None 
+answer_problem_1h = 3.0/10.0
 
