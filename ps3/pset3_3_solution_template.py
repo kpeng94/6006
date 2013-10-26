@@ -26,7 +26,7 @@ def approximate_search(T, S):
     return None
   sHash = rolling_hash(S)
   sHashVariants = compute_variants_and_hashes(S)
-  for i in range(tLength - sLength):
+  for i in range(tLength - sLength + 1):
     substringT = T[i: i + sLength]
     substringTHash = rolling_hash(substringT)
     if (sHash == substringTHash):
@@ -34,7 +34,7 @@ def approximate_search(T, S):
         return i
     for j in sHashVariants:
       if j[1] == substringTHash:
-        if j[0] == list(substringT):
+        if j[0] == substringT:
           return i
   return None
 
@@ -52,13 +52,9 @@ def compute_variants_and_hashes(string):
 
   # array of variants and their hashes as tuples (variant, hash)
   variants = [];
-
-  # Make it into a mutable type.
-  originalString = list(string)
+  originalString = string
   originalStringHash = rolling_hash(originalString)
   stringLength = len(string)
-  # The string we actually mutate.
-  dummyString = list(string)
 
   for i in range(stringLength):
     # compute the original digit value
@@ -66,9 +62,7 @@ def compute_variants_and_hashes(string):
     for j in characters:
       if (j != originalString[i]):
         # replace the digit
-        dummyString[i] = j
-        # print dummyString
-        # print originalString
+        dummyString = originalString[:i] + j + originalString[i + 1:]
         # Compute the new hash value, which can be computed by
         # getting the original hash value and subtracting the
         # value of the digit here * a ** position from right.
@@ -78,22 +72,14 @@ def compute_variants_and_hashes(string):
     dummyString = list(string)
   # swaps
   for i in range(stringLength - 1):
-    dummyVariable = originalString[i]
-    dummyString[i] = originalString[i + 1]
-    dummyString[i + 1] = dummyVariable
+    dummyString = originalString[:i] + originalString[i + 1] + originalString[i] + originalString[i + 2:]
     digitIValue = (compute(originalString[i + 1], stringLength, i) - compute(originalString[i], stringLength, i)) % m
     digitJValue = (compute(originalString[i], stringLength, i + 1) - compute(originalString[i + 1], stringLength, i + 1)) % m
     dummyStringHash = (originalStringHash + digitIValue + digitJValue) % m
     variants.append((dummyString, dummyStringHash))
-    dummyString = list(string)
   return variants
 
 def compute(character, stringLength, index):
   if character == " ":
     return 0
   return ((ord(character) - 96) * a ** (stringLength - index - 1)) % m
-
-# print approximate_search("the quick brown fox jumps over the lazy dog", "uqick")
-# print approximate_search("the quick brown fox jumps over the lazy dog", "the")
-# print approximate_search("the quick brown fox jumps over the lazy dog", "thez")
-# print approximate_search("the quick brown fox jumps over the lazy dog", "hello world")
