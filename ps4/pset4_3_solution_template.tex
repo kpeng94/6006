@@ -1,0 +1,163 @@
+%
+% 6.006 problem set 4 solution template
+% You can ignore the first 50 lines here.  Search for TODO.
+%
+\documentclass[12pt,oneside]{article}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{clrscode}
+
+\def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
+
+\newcommand{\name}{}
+
+\newcommand{\mitst}[1]{\begin{description}
+\item[MIT students:] #1
+\end{description}}
+\newcommand{\smast}[1]{\begin{description}
+\item[SMA students:] #1
+\end{description}}
+
+\newcommand{\profs}{Erik Demaine, Ronald L. Rivest, and Nir Shavit}
+\newcommand{\subj}{6.006}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\newcommand{\htitle}[3]{\noindent\vspace*{-\toppush}\newline\parbox{6.5in}
+{\textit{Introduction to Algorithms: 6.006}\hfill\name\newline
+Massachusetts Institute of Technology \hfill #3\newline
+\profs\hfill Handout #1\vspace*{-.5ex}\newline
+\mbox{}\hrulefill\mbox{}}\vspace*{1ex}\mbox{}\newline
+\begin{center}{\Large\bf #2}\end{center}}
+
+\newcommand{\handout}[3]{\thispagestyle{empty}
+ \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
+ \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
+
+ 
+\newcounter{problemnum}
+\newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
+\newenvironment{problems}{
+        \begin{list}{{\bf \theproblem. \hspace*{0.5em}}}
+        {\setlength{\leftmargin}{0em}
+         \setlength{\rightmargin}{0em}
+         \setlength{\labelwidth}{0em}
+         \setlength{\labelsep}{0em}
+         \usecounter{problemnum}}}{\end{list}}
+\makeatletter
+\newcommand{\problem}[1][{}]{\item \let\@currentlabel=\theproblem \textbf{#1}}
+\makeatother
+
+\newcounter{problempartnum}[problemnum]
+\newenvironment{problemparts}{
+        \begin{list}{{\bf (\alph{problempartnum})}}
+        {\setlength{\leftmargin}{2.5em}
+         \setlength{\rightmargin}{2.5em}
+         \setlength{\labelsep}{0.5em}}}{\end{list}}
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
+ 
+\newcommand{\points}[1]{[#1 points]\ }
+\newcommand{\parts}[1]
+{
+  \ifnum#1=1
+  (1 part)
+  \else
+  (#1 parts)
+  \fi
+  \ 
+}
+ 
+ 
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{4}
+\renewcommand{\theproblemnum}{3}
+\newcommand{\releasedate}{October 22, 2013}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tab}{\hspace*{\tabUnit}}
+
+\newcommand{\yourname}{YOUR NAME HERE}  %TODO
+\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+
+\begin{document}
+
+\begin{center}
+\handout{\# 4}{Problem Set \theproblemsetnum, Problem \theproblemnum}{\releasedate}
+\begin{large} \yourname \end{large} \\
+\begin{large} Collaborators:  \yourcollaborators \end{large} \\
+\end{center}
+
+\hrulefill
+\medskip
+
+This problem set is due {\bf Tuesday, November 5} at {\bf 11:59PM}. \\
+
+This solution template should be turned in through \color{blue} \href{https://alg.csail.mit.edu}{our submission site}. \color{black}   \footnote{Register an account, if you haven't done so.  Then go to Homework, Problem Set 4, and upload your files.  } \\
+
+For written questions, full credit will be given only to
+correct solutions that are described clearly {\em and concisely}. \\
+
+\medskip
+
+\hrulefill
+
+\newpage
+
+\pagestyle{myheadings}
+
+
+\begin{problems}
+
+\problem \points{25} \textbf{Joan of Arcsin}
+
+\begin{problemparts}
+
+\problempart \points{10}
+Explain how you would implement the arcsin function using Newton's
+Method, and the given library. It must work correctly and efficiently for all $y$ in the
+given range, including the endpoints. You may assume that the given library is correct
+and of great accuracy.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{10}
+ Explain why one iteration of Newton's Method definitely improves your
+approximation to the correct answer (assuming that it is not already exactly the correct
+answer).
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\problempart \points{5}
+Explain why your iterative procedure doesn't take you outside the range $[0,\frac{\pi}{2}]$, inclusive.
+
+\fbox{\vbox{
+%TODO:
+Write something here!
+}}
+
+\end{problemparts}
+
+
+\end{problems}
+
+\end{document}
