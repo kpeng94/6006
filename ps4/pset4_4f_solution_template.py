@@ -35,6 +35,7 @@ class DemoDerbyState:
 ### Implement me! ###
 def DemoDerby(N, B, C):
   possible_locations_to_go_to = set()
+  car_locations = set()
   # Map all points to a N + 2 by N + 2 grid
   # The padding is for the movement later
   # We add (1,1) so that the grid is centered properly
@@ -44,21 +45,25 @@ def DemoDerby(N, B, C):
   for boulder in B:
     boulder_loc = (N + 2) * (boulder[0] + 1) + (boulder[1] + 1)
     possible_locations_to_go_to.remove(boulder_loc)
-  states = []
+  for car in C:
+    car_location = (N + 2) * (car[0] + 1) + (car[1] + 1)
+    car_locations.add(car_location)
+  # States needs to be a list for BFS
+  queue = []
   moves_set = set()
   visited_car_locations = set()
   # State is a board + moves made so far
-  states.append(DemoDerbyState(set(C), moves_set, None, None))
-  while len(states) > 0:
-    currentState = states.pop(0)
+  queue.append(DemoDerbyState(car_locations, moves_set, None, None))
+  while len(queue) > 0:
+    currentState = queue.pop(0)
     current_car_locations = currentState.car_locations
     current_moves_set = currentState.moves_set
     for car_location in current_car_locations:
       # Get the new car locations for each car_location
-      new_car_location_tuples = [N * (car_location[0] - 1) + car_location[1],
-                                 N * (car_location[0] + 1) + car_location[1],
-                                 N * (car_location[0]) + car_location[1] + 1,
-                                 (car_location[0], car_location[1] - 1)]
+      new_car_location_tuples = [car_location - (N + 2),
+                                 car_location + (N + 2),
+                                 car_location - 1,
+                                 car_location + 1]
       for new_car_location in new_car_location_tuples:
         # Create a new move
         move = (car_location, new_car_location)
@@ -82,7 +87,7 @@ def DemoDerby(N, B, C):
                 state = state.parent
               moves_list.reverse()
               return moves_list
-            states.append(DemoDerbyState(new_car_locations, new_moves_set, move, currentState))
+            queue.append(DemoDerbyState(new_car_locations, new_moves_set, move, currentState))
             visited_car_locations.add(new_car_locations)
   return None
 
