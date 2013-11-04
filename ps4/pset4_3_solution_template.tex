@@ -41,7 +41,7 @@ Massachusetts Institute of Technology \hfill #3\newline
  \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
  \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
 
- 
+
 \newcounter{problemnum}
 \newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
 \newenvironment{problems}{
@@ -61,8 +61,8 @@ Massachusetts Institute of Technology \hfill #3\newline
         {\setlength{\leftmargin}{2.5em}
          \setlength{\rightmargin}{2.5em}
          \setlength{\labelsep}{0.5em}}}{\end{list}}
-\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
- 
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
+
 \newcommand{\points}[1]{[#1 points]\ }
 \newcommand{\parts}[1]
 {
@@ -71,10 +71,10 @@ Massachusetts Institute of Technology \hfill #3\newline
   \else
   (#1 parts)
   \fi
-  \ 
+  \
 }
- 
- 
+
+
 \setlength{\oddsidemargin}{0pt}
 \setlength{\evensidemargin}{0pt}
 \setlength{\textwidth}{6.5in}
@@ -90,8 +90,8 @@ Massachusetts Institute of Technology \hfill #3\newline
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tab}{\hspace*{\tabUnit}}
 
-\newcommand{\yourname}{YOUR NAME HERE}  %TODO
-\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+\newcommand{\yourname}{Kevin Peng}
+\newcommand{\yourcollaborators}{Genghis Chau, Jodie Chen}
 
 \begin{document}
 
@@ -133,8 +133,7 @@ given range, including the endpoints. You may assume that the given library is c
 and of great accuracy.
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+We start with the equation $x = \arcsin(y)$. Since we can only use mathematical functions in our library with $\sin, \cos,$ and $\tan$, we change this equation to $y = \sin(x)$. Then we subtract from both sides to get $\sin(x) - y = 0$. Thus, we let $f(x) = \sin(x) - y$ and find that $f'(x) = \cos(x)$. We can use the tangent line approximation to get $x_{i+1} = x_i - \frac{f(x_{i})}{f'(x_{i})}$.
 }}
 
 \problempart \points{10}
@@ -143,8 +142,6 @@ approximation to the correct answer (assuming that it is not already exactly the
 answer).
 
 \fbox{\vbox{
-%TODO:
-Write something here!
 }}
 
 \problempart \points{5}

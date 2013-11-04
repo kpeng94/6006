@@ -41,7 +41,7 @@ Massachusetts Institute of Technology \hfill #3\newline
  \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
  \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
 
- 
+
 \newcounter{problemnum}
 \newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
 \newenvironment{problems}{
@@ -61,8 +61,8 @@ Massachusetts Institute of Technology \hfill #3\newline
         {\setlength{\leftmargin}{2.5em}
          \setlength{\rightmargin}{2.5em}
          \setlength{\labelsep}{0.5em}}}{\end{list}}
-\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
- 
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
+
 \newcommand{\points}[1]{[#1 points]\ }
 \newcommand{\parts}[1]
 {
@@ -71,12 +71,12 @@ Massachusetts Institute of Technology \hfill #3\newline
   \else
   (#1 parts)
   \fi
-  \ 
+  \
 }
 
 \newcommand{\defn}[1]{{\boldmath\textit{\textbf{#1}}}}
 \newcommand{\defi}[1]{{\textit{\textbf{#1\/}}}}
- 
+
 \setlength{\oddsidemargin}{0pt}
 \setlength{\evensidemargin}{0pt}
 \setlength{\textwidth}{6.5in}
@@ -92,8 +92,8 @@ Massachusetts Institute of Technology \hfill #3\newline
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tab}{\hspace*{\tabUnit}}
 
-\newcommand{\yourname}{YOUR NAME HERE}  %TODO
-\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+\newcommand{\yourname}{Kevin Peng}
+\newcommand{\yourcollaborators}{None}
 
 \begin{document}
 
@@ -144,8 +144,9 @@ Argue the following two statements:
 \end{itemize}
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+If there exists an odd-length cycle, we will isolate the cycle and try to color it with only two colors. Without loss of generality, we color some node on the graph a color $c_1$. The next node in the cycle must be color $c_2$. The following nodes must be colors $c_1, c_2, c_1, c_2 \dots$. The last node must be $c_1$. However, this contradicts the two-colorable property, so this cycle is not two-colorable. Thus, the graph is not two-colorable if it contains an odd-length cycle.
+
+If there does not exist an odd-length cycle
 }}
 
 \problempart \points{10}

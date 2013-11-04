@@ -41,7 +41,7 @@ Massachusetts Institute of Technology \hfill #3\newline
  \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
  \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
 
- 
+
 \newcounter{problemnum}
 \newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
 \newenvironment{problems}{
@@ -61,8 +61,8 @@ Massachusetts Institute of Technology \hfill #3\newline
         {\setlength{\leftmargin}{2.5em}
          \setlength{\rightmargin}{2.5em}
          \setlength{\labelsep}{0.5em}}}{\end{list}}
-\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
- 
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
+
 \newcommand{\points}[1]{[#1 points]\ }
 \newcommand{\parts}[1]
 {
@@ -71,10 +71,10 @@ Massachusetts Institute of Technology \hfill #3\newline
   \else
   (#1 parts)
   \fi
-  \ 
+  \
 }
- 
- 
+
+
 \setlength{\oddsidemargin}{0pt}
 \setlength{\evensidemargin}{0pt}
 \setlength{\textwidth}{6.5in}
@@ -92,8 +92,8 @@ Massachusetts Institute of Technology \hfill #3\newline
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tab}{\hspace*{\tabUnit}}
 
-\newcommand{\yourname}{YOUR NAME HERE}  %TODO
-\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+\newcommand{\yourname}{Kevin Peng}
+\newcommand{\yourcollaborators}{Genghis Chau}
 
 \begin{document}
 
@@ -147,8 +147,11 @@ that Ben would take.
 
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+We can take all road edges with lengths $2$ and $3$ and split them into smaller roads of length $1$. If these roads are ``bad" roads, we can label the new roads with badness of $\frac{1}{n}$ where $n$ is the length of the original road edges. For example, if nodes $A$ and $B$ are connected by a road of length 3, we would remove the edge connecting $A$ and $B$ and create new edges from $A$ to $N_1$, $N_1$ to $N_2$, and $N_2$ to $B$, where each of these edges have a length of 1 and a badness index of $\frac{1}{3}$. This will yield at most $3E$ edges, where $E$ is the number of edges in the original graph and $V + 2E$ vertices. This effectively removes the weights from the problem since all edges now have a length of $1$, so finding the path with the minimum length is equivalent to finding the path with the least number of edges. Something to note here is that our modification to the graph will not produce an incorrect path. If we look at our example, any path that originally would have gone from $A$ to $B$ will still have to go from $A$ to $N_1$ to $N_2$ to $B$.
+
+Then, we will run BFS from the starting node until we reach the goal. Here, we will use a queue-based implementation, in which the elements are the paths from the start node to some node in the graph. Every time we consider adding a new node, we will keep track of the length of the path from the start node to this current node (which we can do in constant time since this is the same as keeping track of the level in a regular BFS) and the total number of bad roads that the path contains (this can also be done in constant time per iteration). If the total number of bad roads is greater than $3$ (it could be a fraction greater than $3$ due to our modification), we discard that path instead of adding it to our queue. Otherwise, if the node is the goal node, we can immediately return the path to that node as the minimum-length path and revert the any edge modifications that we made in our initial setup.
+
+For our time analysis, we note that we can remove an edge and add an edge or vertex in constant time. Thus, our initial modification of the graph will take $O(E)$ time. We know that the running time of BFS is $O(\text{number of vertices } + \text{number of edges})$. For the modified graph, this will take $O(V+ 5E)$ time. Lastly, undoing the changes we made on the minimum-length path will take $O(E)$ time as well. Thus, the total running time of this algorithm is $O(V+E)$.
 }}
 
 

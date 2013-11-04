@@ -41,7 +41,7 @@ Massachusetts Institute of Technology \hfill #3\newline
  \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
  \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
 
- 
+
 \newcounter{problemnum}
 \newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
 \newenvironment{problems}{
@@ -61,8 +61,8 @@ Massachusetts Institute of Technology \hfill #3\newline
         {\setlength{\leftmargin}{2.5em}
          \setlength{\rightmargin}{2.5em}
          \setlength{\labelsep}{0.5em}}}{\end{list}}
-\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
- 
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
+
 \newcommand{\points}[1]{[#1 points]\ }
 \newcommand{\parts}[1]
 {
@@ -71,10 +71,10 @@ Massachusetts Institute of Technology \hfill #3\newline
   \else
   (#1 parts)
   \fi
-  \ 
+  \
 }
- 
- 
+
+
 \setlength{\oddsidemargin}{0pt}
 \setlength{\evensidemargin}{0pt}
 \setlength{\textwidth}{6.5in}
@@ -167,8 +167,7 @@ $8$ moves. One example of such an $8$ move solution is:
 What are the possible states the derby can be in? How might you represent the states in a Python program?
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+The possible states that the derby can be in fall into two major categories: complete and incomplete. We can represent the states by the locations of the cars.
 }}
 
 \problempart \points {2}
@@ -206,8 +205,7 @@ which may be diagrammed as follows:
 Provide a $4$ move solution.
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+A $4$ move solution would be $[((0,0),(0,1)),((0,1),(0,2),((1,2),(0,2)),((0,3),(0,2))]$
 }}
 
 \problempart \points {2}
