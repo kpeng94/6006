@@ -1,0 +1,137 @@
+%
+% 6.006 problem set 5 solution template
+% You can ignore the first 50 lines here.  Search for TODO.
+%
+\documentclass[12pt,oneside]{article}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{clrscode}
+
+\def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
+
+\newcommand{\name}{}
+
+\newcommand{\mitst}[1]{\begin{description}
+\item[MIT students:] #1
+\end{description}}
+\newcommand{\smast}[1]{\begin{description}
+\item[SMA students:] #1
+\end{description}}
+
+\newcommand{\profs}{Erik Demaine, Ronald L. Rivest, and Nir Shavit}
+\newcommand{\subj}{6.006}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\newcommand{\htitle}[3]{\noindent\vspace*{-\toppush}\newline\parbox{6.5in}
+{\textit{Introduction to Algorithms: 6.006}\hfill\name\newline
+Massachusetts Institute of Technology \hfill #3\newline
+\profs\hfill Handout #1\vspace*{-.5ex}\newline
+\mbox{}\hrulefill\mbox{}}\vspace*{1ex}\mbox{}\newline
+\begin{center}{\Large\bf #2}\end{center}}
+
+\newcommand{\handout}[3]{\thispagestyle{empty}
+ \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
+ \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
+
+ 
+\newcounter{problemnum}
+\newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
+\newenvironment{problems}{
+        \begin{list}{{\bf \theproblem. \hspace*{0.5em}}}
+        {\setlength{\leftmargin}{0em}
+         \setlength{\rightmargin}{0em}
+         \setlength{\labelwidth}{0em}
+         \setlength{\labelsep}{0em}
+         \usecounter{problemnum}}}{\end{list}}
+\makeatletter
+\newcommand{\problem}[1][{}]{\item \let\@currentlabel=\theproblem \textbf{#1}}
+\makeatother
+
+\newcounter{problempartnum}[problemnum]
+\newenvironment{problemparts}{
+        \begin{list}{{\bf (\alph{problempartnum})}}
+        {\setlength{\leftmargin}{2.5em}
+         \setlength{\rightmargin}{2.5em}
+         \setlength{\labelsep}{0.5em}}}{\end{list}}
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
+ 
+\newcommand{\points}[1]{[#1 points]\ }
+\newcommand{\parts}[1]
+{
+  \ifnum#1=1
+  (1 part)
+  \else
+  (#1 parts)
+  \fi
+  \ 
+}
+
+\newcommand{\defn}[1]{{\boldmath\textit{\textbf{#1}}}}
+\newcommand{\defi}[1]{{\textit{\textbf{#1\/}}}}
+ 
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{5}
+\renewcommand{\theproblemnum}{1}
+\newcommand{\releasedate}{November 5, 2013}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tab}{\hspace*{\tabUnit}}
+
+\newcommand{\yourname}{Kevin Peng}
+\newcommand{\yourcollaborators}{None}
+
+\begin{document}
+
+\begin{center}
+\handout{\# 5}{Problem Set \theproblemsetnum, Problem \theproblemnum}{\releasedate}
+\begin{large} \yourname \end{large} \\
+\begin{large} Collaborators:  \yourcollaborators \end{large} \\
+\end{center}
+
+\hrulefill
+\medskip
+
+This problem set is due {\bf Thursday, November 21} at {\bf 11:59PM}. \\
+
+This solution template should be turned in through \color{blue} \href{https://alg.csail.mit.edu}{our submission site}. \color{black}   \footnote{Register an account, if you haven't done so.  Then go to Homework, Problem Set 5, and upload your files.  } \\
+
+For written questions, full credit will be given only to
+correct solutions that are described clearly {\em and concisely}. \\
+
+\medskip
+
+\hrulefill
+
+\newpage
+
+\pagestyle{myheadings}
+
+
+\begin{problems}
+
+\problem \points{20} \textbf{World War Algorithms}
+
+\fbox{\vbox{
+First, we note that our goal is to maximize the probability that the MIT army is not ambushed. This is equal to $\prod_{(i,j)\in p.E}{(1-P_{i,j})}$, where $p$ is the optimal path and $p.E$ are the edges along that path. Maximizing this probability is the same as maximizing the sum of the logs of each term. That is, we want to maximize $$\sum_{(i,j)\in p.E}{\log{(1-P_{i,j})}}$$ We can do this by minimizing $$\sum_{(i,j)\in p.E}{-(\log{1-P_{i,j}})}$$ This implies that we should transform all the weights on the edges from $P_{i,j}$ to $f(P_{i,j} = -\log{(1-P_{i,j})}$. Then, we can run Dijkstra's algorithm on this new graph since all the new values are nonnegative, and our goal is to minimize the sum of the weights on the edges. The transformation will be applied to each edge, so the transformations will take $\Theta(E)$ time. Dijkstra's algorithm takes $O(V\log V + E)$ time to run, so in total, this solution will take $O(V\log V + E)$ time to run. 
+
+Note: $1-P_{i,j}$ is always in the range $[0,1]$, so $\log{(1-P_{i,j})}$ is always in the range $[-\infty, 0]$ and thus $-\log{(1-P_{i,j})}$ is always nonnegative.
+}}
+  
+\end{problems}
+
+\end{document}
