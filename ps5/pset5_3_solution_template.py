@@ -126,8 +126,8 @@ else:
 
 def Compute_All_Voltages(N, A):
     # List of neurons to fire
-    # Neuron, Voltage, Time
     hashD = hashDictionary()
+    # Neuron, Time, Voltage
     hashD.insert(N[0][0], 0, 1)
     # Neurons already activated
     activated_neurons = set()
@@ -139,18 +139,20 @@ def Compute_All_Voltages(N, A):
         # Add activated neuron and append to answers list
         if neuron[0] not in activated_neurons:
             activated_neurons.add(neuron[0])
-            answer_list.append(neuron)
+            answer_list.append((neuron[0], neuron[2], neuron[1]))
 
             for axon in A:
                 # If axon's parent is equal to neuron
+                # Check if it is in there already
                 if axon[0] == neuron[0] and axon[1] not in activated_neurons:
-                    # Check if it is in there already
                     cost = hashD.get_cost(axon[1])
                     if cost is not None and cost > neuron[1] + axon[2]:
+                        # axon[3] is cc
+                        # neuron[1] is 
                         hashD.decrease_key(axon[1], neuron[1] + axon[2], Blackbox(neuron[2], axon[3]))
-                    else:
-                        hashD.insert(axon[1], neuron[1] + axon[2], Blackbox(neuron[2],axon[3]))
-    return sorted(answer_list)
+                    elif cost is None:
+                        hashD.insert(axon[1], neuron[1] + axon[2], Blackbox(neuron[2], axon[3]))
+    return answer_list
 
 ####################
 ### Problem 5-3b ###
@@ -166,80 +168,44 @@ def Compute_All_Voltages(N, A):
 ######################################################################################
 
 def Compute_Motor_Voltage(N, A, motor):
-    # hashD = hashDictionary()
-    # hashD.insert(N[0][0], 0, N[0][1])
-    # # Neurons already activated
-    # activated_neurons = set()
-    # # Answer to return
-    # answer_list = []
-
-    # for i in N:
-    #     if motor == i[0]:
-    #         motor_location = i[1]
-
-    # while !hashD.is_empty():
-    #     neuron = hashD.pop()
-    #     for i in N:
-    #         if i[0] == neuron[0]:
-    #             neuron_location = i[1]
-    #     if neuron[0] not in activated_neurons:
-    #         if neuron[0] == motor:
-    #             return (neuron[2], neuron[1])
-    #         activated_neurons.add(neuron[0])
-    #         answer_list.append(neuron)
-
-    #         for axon in A:
-    #             # If axon's parent is equal to neuron
-    #             if axon[0] == neuron[0] and axon[1] not in activated_neurons:
-    #                 heuristic = math.sqrt((motor_location[1] - neuron_location[1]) * (motor_location[1] - neuron_location[1]) +
-    #                                       (motor_location[0] - neuron_location[0]) * (motor_location[0] - neuron_location[0]) +
-    #                                       (motor_location[2] - neuron_location[2]) * (motor_location[2] - neuron_location[2]))
-    #                 # Check if it is in there already
-    #                 cost = hashD.get_cost(axon[1])
-    #                 if cost != None and cost < neuron[1] + axon[2]:
-    #                     hashD.decrease_key(axon[1], neuron[1] + axon[2], Blackbox(neuron[2], axon[3]))
-    #                 else:
-    #                     hashD.insert((axon[1], neuron[1] + axon[2], Blackbox(neuron[2],axon[3])))
-    # return answer_list
-
-    #         for axon in A:
-    #             # If axon's parent is equal to neuron
-    #             if axon[0] == neuron[0] and axon[1] not in activated_neurons:
-    #                 axon[1]
-    #                 queue.append((axon[1], neuron[1] + axon[2], Blackbox(neuron[2],axon[3]), heuristic))
-    #         queue = sorted(queue, key=lambda neuron:neuron[1] + neuron[3])
-    # return answer_list
-
-    initial_neuron = (N[0][0],0,1)
-    queue = [initial_neuron]
-    activated_neurons = set()
-    answer_list = []
+    # Get motor location
     for i in N:
         if motor == i[0]:
             motor_location = i[1]
-    while len(queue) != 0:
-        neuron = queue.pop(0)
-        for i in N:
-            if i[0] == neuron[0]:
-                neuron_location = i[1]
-        # Add activated neuron and append to answers list
+    # Get initial start location
+    heuristics = []
+    for i in N:
+        neuron_location = i[1]
+        heuristics.append(math.sqrt((motor_location[1] - neuron_location[1]) * (motor_location[1] - neuron_location[1]) +
+                                  (motor_location[0] - neuron_location[0]) * (motor_location[0] - neuron_location[0]) +
+                                  (motor_location[2] - neuron_location[2]) * (motor_location[2] - neuron_location[2])))
+    # List of neurons to fire
+    hashD = hashDictionary()
+    # Neuron, Time, Voltage
+    hashD.insert(N[0][0], heuristics[0], 1)
+    # Neurons already activated
+    activated_neurons = set()
+
+    while not hashD.is_empty():
+        neuron = hashD.pop()
+        # Add activated neuron if not motor neuron
         if neuron[0] not in activated_neurons:
             if neuron[0] == motor:
                 return (neuron[2], neuron[1])
             activated_neurons.add(neuron[0])
-            answer_list.append(neuron)
 
             for axon in A:
                 # If axon's parent is equal to neuron
+                # Check if it is in there already
                 if axon[0] == neuron[0] and axon[1] not in activated_neurons:
-                    heuristic = math.sqrt((motor_location[1] - neuron_location[1]) * (motor_location[1] - neuron_location[1]) +
-                                          (motor_location[0] - neuron_location[0]) * (motor_location[0] - neuron_location[0]) +
-                                          (motor_location[2] - neuron_location[2]) * (motor_location[2] - neuron_location[2]))
-                    queue.append((axon[1], neuron[1] + axon[2], Blackbox(neuron[2],axon[3]), heuristic))
-            queue = sorted(queue, key=lambda neuron:neuron[1] + neuron[3])
-    return sorted(answer_list)
+                    heuristic = heuristics[axon[1]]
+                    cost = hashD.get_cost(axon[1])
 
-
+                    if cost is not None and cost > neuron[1] + axon[2] + heuristic:
+                        hashD.decrease_key(axon[1], neuron[1] - heuristics[neuron[0]] + axon[2] + heuristic, Blackbox(neuron[2], axon[3]))
+                    elif cost is None:
+                        hashD.insert(axon[1], neuron[1] - heuristics[neuron[0]] + axon[2] + heuristic, Blackbox(neuron[2], axon[3]))
+    return None
 
 ####################
 ### Problem 5-3d ###
@@ -255,4 +221,50 @@ def Compute_Motor_Voltage(N, A, motor):
 ######################################################################################
 
 def Quick_Motor_Voltage(N, A, motor):
-    pass
+    # Calulate all heuristics for A*
+    for i in N:
+        if motor == i[0]:
+            motor_location = i[1]
+    heuristics = []
+    for i in N:
+        neuron_location = i[1]
+        heuristics.append(math.sqrt((motor_location[1] - neuron_location[1]) * (motor_location[1] - neuron_location[1]) +
+                                  (motor_location[0] - neuron_location[0]) * (motor_location[0] - neuron_location[0]) +
+                                  (motor_location[2] - neuron_location[2]) * (motor_location[2] - neuron_location[2])))
+    # List of neurons to fire
+    hashD = hashDictionary()
+    # Neuron, Time (heuristic included), Axons
+    hashD.insert(N[0][0], heuristics[0], [])
+    # Neurons already activated
+    activated_neurons = set()
+
+    while not hashD.is_empty():
+        neuron = hashD.pop()
+        # Add activated neuron if not motor neuron
+        if neuron[0] not in activated_neurons:
+            if neuron[0] == motor:
+                answer_neuron = neuron
+                break
+            activated_neurons.add(neuron[0])
+
+            for axon in A:
+                # If axon's parent is equal to neuron
+                # Check if it is in there already
+                if axon[0] == neuron[0] and axon[1] not in activated_neurons:
+                    heuristic = heuristics[axon[1]]
+                    cost = hashD.get_cost(axon[1])
+
+                    if cost is not None and cost > neuron[1] + axon[2] + heuristic:
+                        # Replace with new path: consists of path to neuron[0] and axon
+                        hashD.decrease_key(axon[1], neuron[1] - heuristics[neuron[0]] + axon[2] + heuristic, neuron[2] + [neuron[0]])
+                    elif cost is None:
+                        hashD.insert(axon[1], neuron[1] - heuristics[neuron[0]] + axon[2] + heuristic, neuron[2] + [neuron[0]])
+    voltage = 1
+    for i in range(len(answer_neuron[2]) - 1):
+        for axon in A:
+            if axon[0] == answer_neuron[2][i] and axon[1] == answer_neuron[2][i + 1]:
+                voltage = Blackbox(voltage, axon[3])
+    for axon in A:
+        if axon[0] == answer_neuron[2][len(answer_neuron[2]) - 1] and axon[1] == motor:
+            voltage = Blackbox(voltage, axon[3])
+    return (voltage, answer_neuron[1])

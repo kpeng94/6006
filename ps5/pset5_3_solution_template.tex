@@ -10,7 +10,6 @@
 \usepackage{enumerate}
 \usepackage{textcomp}
 \usepackage[T1]{fontenc}
-\usepackage{clrscode}
 
 \def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
 
@@ -92,8 +91,8 @@ Massachusetts Institute of Technology \hfill #3\newline
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tab}{\hspace*{\tabUnit}}
 
-\newcommand{\yourname}{YOUR NAME HERE}  %TODO
-\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+\newcommand{\yourname}{Kevin Peng}
+\newcommand{\yourcollaborators}{Genghis Chau, Jodie Chen, Anubhav Jain} %TODO
 
 \begin{document}
 
@@ -138,8 +137,7 @@ This part should be completed in \texttt{pset5\_3\_solution\_template.py}.
 \problempart \points{5}
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+It will take $O(n\log n + a)$ time to run $A^*$ and $O(Bd)$ time to call the Blackbox function $B$ times. Thus, the asymptotic running time is $O(n\log n + a + Bd)$.
 }}
 
 \problempart \points{10}
@@ -149,8 +147,7 @@ This part should be completed in \texttt{pset5\_3\_solution\_template.py}.
 \problempart \points{10}
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+We can use a DFS on this graph and return the time after all parents of the motor node have been activated, which we can run this algorithm in $O(N + A + Bd)$ time. 
 }}
 
 \end{problemparts}
