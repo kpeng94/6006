@@ -1,0 +1,180 @@
+%
+% 6.006 problem set 6 solution template
+% You can ignore the first 50 lines here.  Search for TODO.
+%
+\documentclass[12pt,oneside]{article}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{clrscode}
+
+\def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
+
+\newcommand{\name}{}
+
+\newcommand{\mitst}[1]{\begin{description}
+\item[MIT students:] #1
+\end{description}}
+\newcommand{\smast}[1]{\begin{description}
+\item[SMA students:] #1
+\end{description}}
+
+\newcommand{\profs}{Erik Demaine, Ronald L. Rivest, and Nir Shavit}
+\newcommand{\subj}{6.006}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\newcommand{\htitle}[3]{\noindent\vspace*{-\toppush}\newline\parbox{6.5in}
+{\textit{Introduction to Algorithms: 6.006}\hfill\name\newline
+Massachusetts Institute of Technology \hfill #3\newline
+\profs\hfill Handout #1\vspace*{-.5ex}\newline
+\mbox{}\hrulefill\mbox{}}\vspace*{1ex}\mbox{}\newline
+\begin{center}{\Large\bf #2}\end{center}}
+
+\newcommand{\handout}[3]{\thispagestyle{empty}
+ \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
+ \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
+
+ 
+\newcounter{problemnum}
+\newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
+\newenvironment{problems}{
+        \begin{list}{{\bf \theproblem. \hspace*{0.5em}}}
+        {\setlength{\leftmargin}{0em}
+         \setlength{\rightmargin}{0em}
+         \setlength{\labelwidth}{0em}
+         \setlength{\labelsep}{0em}
+         \usecounter{problemnum}}}{\end{list}}
+\makeatletter
+\newcommand{\problem}[1][{}]{\item \let\@currentlabel=\theproblem \textbf{#1}}
+\makeatother
+
+\newcounter{problempartnum}[problemnum]
+\newenvironment{problemparts}{
+        \begin{list}{{\bf (\alph{problempartnum})}}
+        {\setlength{\leftmargin}{2.5em}
+         \setlength{\rightmargin}{2.5em}
+         \setlength{\labelsep}{0.5em}}}{\end{list}}
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
+ 
+\newcommand{\hint}{{\em Hint:\ }}
+
+\newcommand{\points}[1]{[#1 points]\ }
+\newcommand{\parts}[1]
+{
+  \ifnum#1=1
+  (1 part)
+  \else
+  (#1 parts)
+  \fi
+  \ 
+}
+
+\newcommand{\defn}[1]{{\boldmath\textit{\textbf{#1}}}}
+\newcommand{\defi}[1]{{\textit{\textbf{#1\/}}}}
+ 
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{6}
+\renewcommand{\theproblemnum}{2}
+\newcommand{\releasedate}{November 22, 2013}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tab}{\hspace*{\tabUnit}}
+
+\newcommand{\yourname}{YOUR NAME HERE}  %TODO
+\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
+\newcommand{\yourrecitation}{YOUR RECITATION HERE} %TODO
+
+\begin{document}
+
+\begin{center}
+\handout{\# 6}{Problem Set \theproblemsetnum, Problem \theproblemnum}{\releasedate}
+\begin{large} \yourname \end{large} \\
+\begin{large} Collaborators:  \yourcollaborators \end{large} \\
+\begin{large} Recitation: \yourrecitation \end{large}
+\end{center}
+
+\hrulefill
+\medskip
+
+This problem set is due {\bf Thursday, December 5} at {\bf 11:59PM}. \\
+
+This solution template should be turned in through \color{blue} \href{https://alg.csail.mit.edu}{our submission site}. \color{black}   \footnote{Register an account, if you haven't done so.  Then go to Homework, Problem Set 6, and upload your files.  } \\
+
+For written questions, full credit will be given only to
+correct solutions that are described clearly {\em and concisely}. \\
+
+Please fill in the TA and recitation section you attend. Otherwise you may not be able to get your problem sets back in section! \\
+
+\medskip
+
+\hrulefill
+
+\newpage
+
+\pagestyle{myheadings}
+
+
+\begin{problems}
+
+\problem \points{35} \textbf{Adaptive Algorithms: Fast If Lucky}
+
+Your goal in this problem is to develop an algorithm to compute the
+\defn{edit distance} $e(x,y)$ between two $n$-character strings $x$ and $y$,
+that is, the minimum number of character insertions, deletions, and/or
+substitutions to transform $x$ into~$y$.
+Unlike the $O(n^2)$ algorithm presented in class, however, your algorithm will
+run faster whenever $e(x,y)$ happens to be $o(n)$.
+
+\begin{problemparts}
+
+\problempart \points{10}
+Suppose you knew an upper bound $E$ such that $e(x,y) \le E$.
+Describe how to compute $e(x,y)$ in $O(n \cdot E)$ time.
+Be sure to analyze your algorithm..
+
+\fbox{\vbox{
+%TODO
+Write something here!
+}}
+
+\problempart \points{10}
+Given a value $E$, how would you determine whether $e(x,y) \le E$
+in $O(n \cdot E)$ time?
+
+\hint Use your algorithm from part (a).  How can you tell whether it succeeded?
+
+\fbox{\vbox{
+%TODO
+Write something here!
+}}
+
+\problempart \points{15}
+Now give an algorithm to compute $e(x,y)$ in $O(n \cdot e(x,y))$ time
+without any assumptions.  (In particular, the to-be-computed value of $e(x,y)$
+is not known to your algorithm ahead of time.)
+
+\hint Use your algorithm from part (b), for some sequence of choices for~$E$.
+
+\fbox{\vbox{
+%TODO
+Write something here!
+}}
+
+\end{problemparts}
+\end{problems}
+
+\end{document}
