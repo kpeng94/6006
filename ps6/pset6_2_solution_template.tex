@@ -5,12 +5,14 @@
 \documentclass[12pt,oneside]{article}
 
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{color}
 \usepackage{enumerate}
 \usepackage{textcomp}
 \usepackage[T1]{fontenc}
 \usepackage{clrscode}
+\usepackage{fancyvrb}
 
 \def\MLine#1{\par\hspace*{-\leftmargin}\parbox{\textwidth}{\[#1\]}}
 
@@ -41,7 +43,7 @@ Massachusetts Institute of Technology \hfill #3\newline
  \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
  \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
 
- 
+
 \newcounter{problemnum}
 \newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
 \newenvironment{problems}{
@@ -61,8 +63,8 @@ Massachusetts Institute of Technology \hfill #3\newline
         {\setlength{\leftmargin}{2.5em}
          \setlength{\rightmargin}{2.5em}
          \setlength{\labelsep}{0.5em}}}{\end{list}}
-\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
- 
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
+
 \newcommand{\hint}{{\em Hint:\ }}
 
 \newcommand{\points}[1]{[#1 points]\ }
@@ -73,12 +75,12 @@ Massachusetts Institute of Technology \hfill #3\newline
   \else
   (#1 parts)
   \fi
-  \ 
+  \
 }
 
 \newcommand{\defn}[1]{{\boldmath\textit{\textbf{#1}}}}
 \newcommand{\defi}[1]{{\textit{\textbf{#1\/}}}}
- 
+
 \setlength{\oddsidemargin}{0pt}
 \setlength{\evensidemargin}{0pt}
 \setlength{\textwidth}{6.5in}
@@ -94,9 +96,9 @@ Massachusetts Institute of Technology \hfill #3\newline
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tab}{\hspace*{\tabUnit}}
 
-\newcommand{\yourname}{YOUR NAME HERE}  %TODO
-\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
-\newcommand{\yourrecitation}{YOUR RECITATION HERE} %TODO
+\newcommand{\yourname}{Kevin Peng}  %TODO
+\newcommand{\yourcollaborators}{Genghis Chau, Jodie Chen, Anubhav Jain} %TODO
+\newcommand{\yourrecitation}{Vladislav Kontsevoi WF3} %TODO
 
 \begin{document}
 
@@ -147,9 +149,24 @@ Describe how to compute $e(x,y)$ in $O(n \cdot E)$ time.
 Be sure to analyze your algorithm..
 
 \fbox{\vbox{
-%TODO
-Write something here!
+
+First, we note that edit distance is defined as the number of operations instead of the sum of the cost of the operations in this case. We can think of this as the in-class definition, where the cost per operation is 1. We know that each subproblem takes $O(1)$ to solve, so to reduce this to an $O(n \dot E)$ algorithm, we would like to reduce the number of subproblems we will have to consider to $O(nE)$. We can insert a check to make sure that $|i - j| \leq E$. Once we hit a cell where $|i - j| > E$, we can skip all the cells to the left and any cells in the above row where $|i - j| > E$. We end up at a cell that satisfies $|i - j| \leq E$ and then we could continue. (We would have to assign the cell to the right (if there is one) with an infinite cost so that the recursive cost function still works). Using this algorithm, each row will have at most $E+2$ subproblems that we actually consider, and there are $n$ rows, so the total running time is $O(nE)$.
+
 }}
+\begin{Verbatim}[frame=single]
+for i = n downto 0:
+  for j = n downto 0:
+    if |i - j| > E:
+      e(i, j) = inf
+      jump to next subproblem where |i - j| <= E and
+      label cell to the right (if there is one) with inf cost
+    else:
+      e(i, j) = min(1 + e(i + 1, j) if i < |x|,
+                       1 + e(i, j + 1) if j < |y|,
+                       1 + e(i + 1, j + 1) if i < |x|, j < |y|)
+\end{Verbatim}
+
+
 
 \problempart \points{10}
 Given a value $E$, how would you determine whether $e(x,y) \le E$
@@ -158,8 +175,8 @@ in $O(n \cdot E)$ time?
 \hint Use your algorithm from part (a).  How can you tell whether it succeeded?
 
 \fbox{\vbox{
-%TODO
-Write something here!
+We can use our algorithm from part (a) and then check the value of $e(0,0)$, which holds the value of the problem we're trying to solve.
+If $e(0,0)$ is not infinity, we know that there is an edit distance $\leq E$. Otherwise, there isn't. This takes the same amount of time as part (a) plus a constant check, so this runs in $O(nE)$ time.
 }}
 
 \problempart \points{15}
@@ -170,8 +187,7 @@ is not known to your algorithm ahead of time.)
 \hint Use your algorithm from part (b), for some sequence of choices for~$E$.
 
 \fbox{\vbox{
-%TODO
-Write something here!
+We use our algorithm from part (b), except we pick a specific sequence of choices: 1, 2, 4, $\dots 2^k$ for some $k \in \mathbb{Z}$ such that $2^k \geq e(x,y)$ and $k$ as small as possible. Using an amortized analysis, this will take a total of $n + 2n + 4n + \dots 2^k n = (2^{k+1} - 1)n$ time. $2^{k-1} < e(x,y)$ because of the way we defined $k$, so $2^{k+1} < 4e(x,y)$, so this algorithm will run in $O(4ne(x,y)) = O(ne(x,y))$ time.
 }}
 
 \end{problemparts}

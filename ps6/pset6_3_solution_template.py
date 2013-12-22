@@ -416,9 +416,44 @@ startxref
 #####################
 
 ### Sample Inputs ###
-#case1 = "Two households, both alike in dignity, in fair Verona, where we lay our scene, from ancient grudge break to new mutiny, where civil blood makes civil hands unclean. From forth the fatal loins of these two foes a pair of star-cross'd lovers take their life; whole misadventured piteous overthrows do with their death bury their parents' strife. The fearful passage of their death-mark'd love, and the continuance of their parents' rage, which, but their children's end, nought could remove, is now the two hours' traffic of our stage; the which if you with patient ears attend, what here shall miss, our toil shall strive to mend."
+case1 = "Two households, both alike in dignity, in fair Verona, where we lay our scene, from ancient grudge break to new mutiny, where civil blood makes civil hands unclean. From forth the fatal loins of these two foes a pair of star-cross'd lovers take their life; whole misadventured piteous overthrows do with their death bury their parents' strife. The fearful passage of their death-mark'd love, and the continuance of their parents' rage, which, but their children's end, nought could remove, is now the two hours' traffic of our stage; the which if you with patient ears attend, what here shall miss, our toil shall strive to mend."
 #case2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In auctor pretium justo ac sodales. Vivamus fringilla, est sed gravida interdum, sapien est tempus enim, venenatis lobortis libero odio sed massa. Proin sem turpis, aliquam at mollis vitae, placerat at ante. Aliquam ante sapien, faucibus ac nisl vel, luctus venenatis mauris. Duis nisi dolor, rutrum eget ullamcorper a, tincidunt sed felis. In luctus, nulla sit amet vulputate venenatis, eros nunc suscipit nunc, quis tincidunt sapien sapien at justo. Donec condimentum ut est nec rutrum. Proin tellus nunc, euismod et est at, accumsan bibendum augue. Nulla in volutpat magna."
 #case3 = "Mr Phileas Fogg lived, in 1872, at No. 7, Saville Row, Burlington Gardens, the house in which Sheridan died in 1814. He was one of the most noticeable members of the Reform Club, though he seemed always to avoid attracting attention; an enigmatical personage, about whom little was known, except that he was a polished man of the world. People said that he resembled Byron, - at least that his head was Byronic; but he was a bearded, tranquil Byron, who might live on a thousand years without growing old."
 
+def goodness(l):
+  if len(l) == 0:
+    return 0
+  if l[-1][-1] in [".", ",", ";", ":"]:
+    return 10
+  else:
+    return 0
+
+def badness(l):
+  if len(l) - 1 <= 0:
+    return float("inf")
+  if minwidth(l) <= 468:
+    return ((468 - minwidth(l)) / (len(l) - 1)) ** 2
+  return float("inf")
+
 def layout(x):
-    pass
+  dp = {}
+  L = x.split()
+  dp[len(L)] = (0, None)
+  for i in xrange(len(L) - 1, -1, -1):
+    listA = [(badness(L[i:j]) - goodness(L[i:j]) + dp[j][0], j) for j in xrange(i + 1, len(L) + 1)]
+    min_element = min(listA)
+    dp[i] = min_element
+  pdfLines = []
+  i = 0
+  while i is not None:
+    pdfLines.append(L[i:dp[i][1]])
+    i = dp[i][1]
+  pdf = PDF()
+  (x_coordinate, y_coordinate) = (0, 14)
+  for i in pdfLines:
+    space_width = (468 - (minwidth(i) - 3 * (len(i) - 1))) / (len(i) - 1)
+    for j in xrange(len(i)):
+      pdf.write(x_coordinate, y_coordinate, i[j])
+      x_coordinate += space_width + width(i[j])
+    (x_coordinate, y_coordinate) = (0, y_coordinate + 14)
+  return pdf

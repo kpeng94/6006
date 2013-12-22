@@ -41,7 +41,7 @@ Massachusetts Institute of Technology \hfill #3\newline
  \markboth{Handout #1: #2 \hfill \yourname}{Handout #1: #2 \hfill \yourname}
  \pagestyle{myheadings}\htitle{#1}{#2}{#3}\pagenumbering{gobble}}
 
- 
+
 \newcounter{problemnum}
 \newcommand{\theproblem}{Problem \theproblemsetnum-\theproblemnum}
 \newenvironment{problems}{
@@ -61,9 +61,9 @@ Massachusetts Institute of Technology \hfill #3\newline
         {\setlength{\leftmargin}{2.5em}
          \setlength{\rightmargin}{2.5em}
          \setlength{\labelsep}{0.5em}}}{\end{list}}
-\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item} 
+\newcommand{\problempart}{\addtocounter{problempartnum}{1}\item}
 
-\newcommand{\hint}{{\em Hint:\ }} 
+\newcommand{\hint}{{\em Hint:\ }}
 
 \newcommand{\points}[1]{[#1 points]\ }
 \newcommand{\parts}[1]
@@ -73,12 +73,12 @@ Massachusetts Institute of Technology \hfill #3\newline
   \else
   (#1 parts)
   \fi
-  \ 
+  \
 }
 
 \newcommand{\defn}[1]{{\boldmath\textit{\textbf{#1}}}}
 \newcommand{\defi}[1]{{\textit{\textbf{#1\/}}}}
- 
+
 \setlength{\oddsidemargin}{0pt}
 \setlength{\evensidemargin}{0pt}
 \setlength{\textwidth}{6.5in}
@@ -94,9 +94,9 @@ Massachusetts Institute of Technology \hfill #3\newline
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tab}{\hspace*{\tabUnit}}
 
-\newcommand{\yourname}{YOUR NAME HERE}  %TODO
-\newcommand{\yourcollaborators}{YOUR COLLABORATORS HERE} %TODO
-\newcommand{\yourrecitation}{YOUR RECITATION HERE} %TODO
+\newcommand{\yourname}{Kevin Peng}  %TODO
+\newcommand{\yourcollaborators}{Genghis Chau, Jodie Chen, Anubhav Jain, Martin Ma} %TODO
+\newcommand{\yourrecitation}{Vladislav Kontsevoi WF3} %TODO
 
 \begin{document}
 
@@ -147,8 +147,8 @@ Design and analyze an efficient dynamic programming algorithm
 to compute the optimal $\le k$ stops to get out at, in $O(n^2 k)$ time.
 
 \fbox{\vbox{
-%TODO:
-Write something here!
+% We define a subproblem as finding the optimal solution to a bus that makes $m$ stops with exactly $t$ tours to see, and ends partying at the last $p$ stops. Thus, each problem corresponds to an ordered tuple $(m,t,p)$, where $1\leq m \leq n-1$, $1 \leq t \leq k$, and $1 \leq p \leq m$. Thus, the total number of subproblems is $O(n^2k)$. We can write a recurrence, which is that $S(m,t,p) = max(S(m - 1, t, p - 1) + p, )$
+We define a subproblem based on the number of times the bus has stopped. Thus, each problem corresponds to a value $t$ where $0 \leq t \leq k$. Our solution to a subproblem will be the maximum happiness attained while making $\leq t$ stops. We have a recursive solution for our subproblems: the solution to a subproblem with $t$ stops is equal to the max(max(solutions to a subproblem with $t-1$ stops - cost of breaking up a chain of parties + happiness for going on a tour) for all possible tours to stop at, solution to subproblem with $t - 1$ stops). Since we are using a greedy solution, if we do not make an extra stop (that is, if the solution to the subproblem with $t$ stops is the exact same as the solution to the subproblem with $t-1$ stops), we can terminate with the correct answer. This algorithm will run in $O(n^2k)$ time since there are $k$ subproblems, $n$ stops to consider per subproblem, and $O(n)$ stops where the bus might be partying per subproblem. If we know the locations where the bus parties for each subproblem, we can calculate the cost of breaking up a chain of parties in $O(1)$ time using a mathematical formula. Thus, this algorithm runs in $O(n^2k)$.
 }}
 
 \end{problems}
